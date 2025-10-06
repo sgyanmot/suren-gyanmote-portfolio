@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surender Gyanmote - Oracle Database & Cloud Solutions Architect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">Suren (surender)</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Interactive Hero Section with Desk -->
+    <section id="home" class="hero-desk">
+        <div class="desk-container">
+            <!-- Desk Surface -->
+            <div class="desk-surface">
+                
+                <!-- Laptop -->
+                <div class="laptop" id="laptop">
+                    <div class="laptop-screen">
+                        <div class="screen-content">
+                            <div class="portfolio-header">
+                                <div class="window-controls">
+                                    <span class="control red"></span>
+                                    <span class="control yellow"></span>
+                                    <span class="control green"></span>
+                                </div>
+                                <div class="url-bar">surender-gyanmote.dev</div>
+                            </div>
+                            <div class="portfolio-content">
+                                <div class="profile-section">
+                                    <div class="profile-image">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <h1 class="name">Surender Gyanmote</h1>
+                                    <p class="title">Oracle Database & Cloud Solutions Architect</p>
+                                    <p class="description">Expert in enterprise-scale database systems, backup & recovery strategies, and multi-cloud architecture implementations.</p>
+                                    <div class="cta-buttons">
+                                        <button class="btn-primary" onclick="openSection('about')">Learn More</button>
+                                        <button class="btn-secondary" onclick="openSection('contact')">Get In Touch</button>
+                                    </div>
+                                </div>
+                                <div class="skills-preview">
+                                    <div class="skill-tag">Oracle DBA</div>
+                                    <div class="skill-tag">Cloud Architecture</div>
+                                    <div class="skill-tag">AWS/Azure/GCP</div>
+                                    <div class="skill-tag">Backup & Recovery</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="laptop-base"></div>
+                </div>
+
+                <!-- Coffee Cup -->
+                <div class="coffee-cup" id="coffee">
+                    <div class="cup-body">
+                        <div class="coffee-liquid"></div>
+                        <div class="steam">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="cup-handle"></div>
+                </div>
+
+                <!-- Plant -->
+                <div class="plant" id="plant">
+                    <div class="pot"></div>
+                    <div class="plant-stem">
+                        <div class="leaf leaf-1"></div>
+                        <div class="leaf leaf-2"></div>
+                        <div class="leaf leaf-3"></div>
+                    </div>
+                </div>
+
+                <!-- Books Stack -->
+                <div class="books-stack" id="books">
+                    <div class="book book-1"></div>
+                    <div class="book book-2"></div>
+                    <div class="book book-3"></div>
+                </div>
+
+                <!-- Mouse -->
+                <div class="mouse" id="mouse">
+                    <div class="mouse-body">
+                        <div class="mouse-scroll"></div>
+                    </div>
+                </div>
+
+                <!-- Notepad -->
+                <div class="notepad" id="notepad">
+                    <div class="notepad-cover"></div>
+                    <div class="notepad-pages">
+                        <div class="page-line"></div>
+                        <div class="page-line"></div>
+                        <div class="page-line"></div>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="phone" id="phone">
+                    <div class="phone-screen">
+                        <div class="phone-content">
+                            <div class="notification">
+                                <i class="fas fa-envelope"></i>
+                                <span>New message</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Floating Info Cards -->
+        <div class="info-cards">
+            <div class="info-card" id="experience-card">
+                <i class="fas fa-briefcase"></i>
+                <h3>15+ Years</h3>
+                <p>Database Experience</p>
+            </div>
+            <div class="info-card" id="projects-card">
+                <i class="fas fa-cloud"></i>
+                <h3>50+ Projects</h3>
+                <p>Cloud Migrations</p>
+            </div>
+            <div class="info-card" id="certifications-card">
+                <i class="fas fa-certificate"></i>
+                <h3>Oracle Certified</h3>
+                <p>Professional DBA</p>
+            </div>
+        </div>
+
+        <!-- Interactive Hint -->
+        <div class="interaction-hint">
+            <p>💡 Click around the desk to explore!</p>
+        </div>
+    </section>
+
+    <!-- About Section (Hidden by default, shown when laptop is clicked) -->
+    <section id="about" class="content-section hidden">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-intro">
+                    <h3>Surender Gyanmote</h3>
+                    <h4>Cloud Solutions Architect & Oracle Database Specialist</h4>
+                    <p>Technical Program Manager/Cloud Solutions Architect with over two decades of experience in Oracle Database design and development, system administration, cloud solutions architecture, Oracle Engineered Systems, Linux and Solaris System administration and technical leadership. Proven success leading 200+ customer migrations to new platforms, implementing full-stack disaster recovery (FSDR) for OIC Gen3, and driving OCI AI infrastructure adoption globally.</p>
+                    <div class="contact-details">
+                        <p><i class="fas fa-envelope"></i> sgyanmot@yahoo.com | sgyanmot@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> (510) 304-0672</p>
+                        <p><i class="fab fa-linkedin"></i> linkedin.com/in/gyanmotesurender</p>
+                    </div>
+                </div>
+                
+                <div class="expertise-areas">
+                    <h4>Core Expertise</h4>
+                    <div class="expertise-grid">
+                        <div class="expertise-item">
+                            <i class="fas fa-database"></i>
+                            <h5>Oracle Database Administration</h5>
+                            <p>Expert in Oracle 12c/19c/21c, RAC, Data Guard, ASM, and RMAN backup strategies</p>
+                        </div>
+                        <div class="expertise-item">
+                            <i class="fas fa-cloud"></i>
+                            <h5>Multi-Cloud Architecture</h5>
+                            <p>Specialized in OCI, AWS, Azure, and Google Cloud platform implementations</p>
+                        </div>
+                        <div class="expertise-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <h5>Backup & Recovery</h5>
+                            <p>Advanced disaster recovery planning and high-availability solutions</p>
+                        </div>
+                        <div class="expertise-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <h5>Performance Tuning</h5>
+                            <p>Database optimization, query tuning, and capacity planning</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="professional-summary">
+                    <h4>Professional Summary</h4>
+                    <p>Proven track record in leading complex database migration projects, implementing robust backup and recovery strategies, and optimizing database performance for mission-critical applications. Expertise spans from traditional on-premises Oracle environments to modern cloud-native architectures.</p>
+                    <p>Passionate about leveraging cutting-edge cloud technologies to drive digital transformation initiatives while ensuring data integrity, security, and optimal performance across enterprise environments.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Customer Migrations</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Customers Supported</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">Uptime Achieved</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="content-section hidden">
+        <div class="container">
+            <h2>Professional Experience</h2>
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Sep 2003 - Jan 2025</div>
+                    <div class="timeline-content">
+                        <h3>Technical Program Manager / Managed Cloud Services</h3>
+                        <h4>Oracle Corporation</h4>
+                        <div class="role-description">
+                            <p>Led planning, migrations, cutovers, and go-lives of managed customers into Engineered Systems (Exadata, Exalogic, Exalytics, Super Cluster, ZFS). Provided OCI Tenancy Administration, Database/System administration, on-prem & OCI migrations, and supported Tier1 customers as SME during escalations/outages.</p>
+                            <ul class="achievements">
+                                <li>Led enablement of OCI AI Infrastructure and Disaster Recovery (FSDR) implementations</li>
+                                <li>Supported 150+ customers as Performance Engineer on Oracle Databases and E-Business Suite</li>
+                                <li>Drove sizing and capacity initiatives to migrate from legacy Dell to Intel-X servers</li>
+                                <li>Supported 100+ Oracle Partners in Performance Labs on sizing, capacity, tuning, and best practices</li>
+                                <li>Published whitepapers and deployment guides for Oracle Partners</li>
+                                <li>Oracle Database administration and System (Linux and Solaris) administration for 200+ environments, 100+ customers</li>
+                                <li>Led go-lives on Exadata, Exalogic, Exalytics, Super Cluster, and ZFS</li>
+                                <li>Migrated 200+ environments from legacy to new platforms; led production capacity & performance operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="content-section hidden">
+        <div class="container">
+            <h2>Key Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <i class="fas fa-cloud"></i>
+                        <h3>Managed Cloud Services @Customer Infra</h3>
+                        <span class="project-year">2020-2024</span>
+                    </div>
+                    <div class="project-content">
+                        <p>Migrated customer environments from Engineered Systems to Oracle Cloud (DBAAS, EXACS, Object/Block Storage) including planning, cutovers, and go-lives.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Oracle Cloud</span>
+                            <span class="tech-tag">DBAAS</span>
+                            <span class="tech-tag">EXACS</span>
+                            <span class="tech-tag">Object Storage</span>
+                            <span class="tech-tag">Block Storage</span>
+                        </div>
+                        <div class="project-results">
+                            <div class="result-item">
+                                <span class="result-metric">200+</span>
+                                <span class="result-label">Environments Migrated</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-metric">100+</span>
+                                <span class="result-label">Customers Served</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <i class="fas fa-database"></i>
+                        <h3>Oracle Database Administration</h3>
+                        <span class="project-year">2003-2025</span>
+                    </div>
+                    <div class="project-content">
+                        <p>Oracle Database administration and System (Linux and Solaris) administration for 200+ environments, serving 100+ customers with comprehensive database management.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Oracle Database</span>
+                            <span class="tech-tag">Linux</span>
+                            <span class="tech-tag">Solaris</span>
+                            <span class="tech-tag">System Admin</span>
+                            <span class="tech-tag">DBA</span>
+                        </div>
+                        <div class="project-results">
+                            <div class="result-item">
+                                <span class="result-metric">200+</span>
+                                <span class="result-label">Environments Managed</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-metric">100+</span>
+                                <span class="result-label">Customers Supported</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <i class="fas fa-server"></i>
+                        <h3>Managed Cloud Services – Engineered Systems</h3>
+                        <span class="project-year">2015-2020</span>
+                    </div>
+                    <div class="project-content">
+                        <p>Led go-lives on Exadata, Exalogic, Exalytics, Super Cluster, and ZFS. Managed comprehensive deployment and optimization of Oracle's engineered systems.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Exadata</span>
+                            <span class="tech-tag">Exalogic</span>
+                            <span class="tech-tag">Exalytics</span>
+                            <span class="tech-tag">Super Cluster</span>
+                            <span class="tech-tag">ZFS</span>
+                        </div>
+                        <div class="project-results">
+                            <div class="result-item">
+                                <span class="result-metric">Multiple</span>
+                                <span class="result-label">Platform Go-Lives</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-metric">Enterprise</span>
+                                <span class="result-label">Scale Deployments</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h3>Managed Cloud Services – Migrations</h3>
+                        <span class="project-year">2010-2020</span>
+                    </div>
+                    <div class="project-content">
+                        <p>Migrated 200+ environments from legacy to new platforms; led production capacity & performance operations ensuring seamless transitions.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Migration Planning</span>
+                            <span class="tech-tag">Capacity Planning</span>
+                            <span class="tech-tag">Performance Tuning</span>
+                            <span class="tech-tag">Production Support</span>
+                            <span class="tech-tag">Legacy Systems</span>
+                        </div>
+                        <div class="project-results">
+                            <div class="result-item">
+                                <span class="result-metric">200+</span>
+                                <span class="result-label">Environment Migrations</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-metric">Zero</span>
+                                <span class="result-label">Data Loss</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Oracle Performance Labs</h3>
+                        <span class="project-year">2005-2015</span>
+                    </div>
+                    <div class="project-content">
+                        <p>Supported 100+ Oracle Partner products on Oracle Databases and E-Business Suite, providing sizing, capacity, tuning, and best practices guidance.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Oracle Database</span>
+                            <span class="tech-tag">E-Business Suite</span>
+                            <span class="tech-tag">Performance Tuning</span>
+                            <span class="tech-tag">Capacity Planning</span>
+                            <span class="tech-tag">Best Practices</span>
+                        </div>
+                        <div class="project-results">
+                            <div class="result-item">
+                                <span class="result-metric">100+</span>
+                                <span class="result-label">Oracle Partners</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-metric">150+</span>
+                                <span class="result-label">Customers Supported</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="content-section hidden">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>sgyanmot@yahoo.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-briefcase"></i>
+                        <span></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-linkedin"></i>
+                        <span>https://www.linkedin.com/in/gyanmotesurender</span>
+                    </div>
+                </div>
+                
+                <!-- Enhanced Email Contact Form -->
+                <div class="email-contact-section">
+                    <h3>Send Me a Message</h3>
+                    <div class="email-options">
+                        <div class="email-option">
+                            <button class="email-btn direct-email" onclick="openDirectEmail()">
+                                <i class="fas fa-envelope-open"></i>
+                                <span>Send Direct Email</span>
+                                <small>Opens your default email client</small>
+                            </button>
+                        </div>
+                        <div class="email-option">
+                            <button class="email-btn quick-contact" onclick="toggleContactForm()">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Quick Contact Form</span>
+                                <small>Fill out a quick message</small>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Contact Form (Initially Hidden) -->
+                    <div id="quickContactForm" class="quick-contact-form hidden">
+                        <form onsubmit="sendQuickEmail(event)">
+                            <div class="form-group">
+                                <label for="senderName">Your Name</label>
+                                <input type="text" id="senderName" name="senderName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="senderEmail">Your Email</label>
+                                <input type="email" id="senderEmail" name="senderEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send Message
+                                </button>
+                                <button type="button" class="btn-secondary" onclick="toggleContactForm()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
