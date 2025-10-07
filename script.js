@@ -1,10 +1,245 @@
 // Interactive Portfolio JavaScript
 
+// Sound System using Web Audio API
+class SoundSystem {
+    constructor() {
+        this.audioContext = null;
+        this.sounds = {};
+        this.isEnabled = true;
+        this.volume = 0.3;
+        this.init();
+    }
+
+    async init() {
+        try {
+            // Initialize AudioContext on first user interaction
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            this.createSounds();
+        } catch (error) {
+            console.log('Web Audio API not supported:', error);
+        }
+    }
+
+    createSounds() {
+        // Create different sound types
+        this.sounds = {
+            click: this.createTone(800, 0.1, 'sine'),
+            hover: this.createTone(600, 0.05, 'sine'),
+            navigation: this.createTone(1000, 0.15, 'triangle'),
+            button: this.createTone(900, 0.12, 'square'),
+            keypress: this.createTone(700, 0.08, 'sawtooth'),
+            success: this.createChord([523, 659, 784], 0.2),
+            notification: this.createTone(1200, 0.1, 'sine')
+        };
+    }
+
+    createTone(frequency, duration, waveType = 'sine') {
+        return () => {
+            if (!this.audioContext || !this.isEnabled) return;
+
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+
+            oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+            oscillator.type = waveType;
+
+            // Create envelope for natural sound
+            gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(this.volume, this.audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
+
+            oscillator.start(this.audioContext.currentTime);
+            oscillator.stop(this.audioContext.currentTime + duration);
+        };
+    }
+
+    createChord(frequencies, duration) {
+        return () => {
+            if (!this.audioContext || !this.isEnabled) return;
+
+            frequencies.forEach((freq, index) => {
+                setTimeout(() => {
+                    const oscillator = this.audioContext.createOscillator();
+                    const gainNode = this.audioContext.createGain();
+
+                    oscillator.connect(gainNode);
+                    gainNode.connect(this.audioContext.destination);
+
+                    oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
+                    oscillator.type = 'sine';
+
+                    gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(this.volume * 0.3, this.audioContext.currentTime + 0.01);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
+
+                    oscillator.start(this.audioContext.currentTime);
+                    oscillator.stop(this.audioContext.currentTime + duration);
+                }, index * 50);
+            });
+        };
+    }
+
+    play(soundName) {
+        if (this.sounds[soundName]) {
+            this.sounds[soundName]();
+        }
+    }
+
+    toggle() {
+        this.isEnabled = !this.isEnabled;
+        return this.isEnabled;
+    }
+
+    setVolume(volume) {
+        this.volume = Math.max(0, Math.min(1, volume));
+    }
+}
+
+// Initialize sound system
+const soundSystem = new SoundSystem();
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeInteractiveElements();
     initializeNavigation();
     initializeAnimations();
+    
+    // Add sound effects to all clickable elements
+    function addSoundEffects() {
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                soundSystem.play('navigation');
+            });
+            
+            link.addEventListener('mouseenter', () => {
+                soundSystem.play('hover');
+            });
+        });
+
+        // Buttons
+        document.querySelectorAll('button, .btn, .email-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                soundSystem.play('button');
+            });
+            
+            button.addEventListener('mouseenter', () => {
+                soundSystem.play('hover');
+            });
+        });
+
+        // Interactive cards and elements
+        document.querySelectorAll('.info-card, .project-card, .contact-item').forEach(card => {
+            card.addEventListener('click', () => {
+                soundSystem.play('click');
+            });
+            
+            card.addEventListener('mouseenter', () => {
+                soundSystem.play('hover');
+            });
+        });
+
+        // Logo click
+        document.querySelector('.logo-text')?.addEventListener('click', () => {
+            soundSystem.play('success');
+        });
+
+        // Form inputs
+        document.querySelectorAll('input, textarea, select').forEach(input => {
+            input.addEventListener('focus', () => {
+                soundSystem.play('click');
+            });
+            
+            input.addEventListener('input', () => {
+                soundSystem.play('keypress');
+            });
+        });
+    }
+
+    // Keyboard event sounds
+    document.addEventListener('keydown', function(e) {
+        switch(e.key) {
+            case 'Enter':
+                soundSystem.play('button');
+                break;
+            case 'Escape':
+                soundSystem.play('notification');
+                break;
+            case 'Tab':
+                soundSystem.play('navigation');
+                break;
+            case ' ': // Spacebar
+                if (e.target.tagName === 'BUTTON' || e.target.classList.contains('btn')) {
+                    soundSystem.play('button');
+                }
+                break;
+            default:
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    soundSystem.play('keypress');
+                }
+        }
+    });
+
+    // Initialize sound effects after user interaction
+    document.addEventListener('click', function initSounds() {
+        if (soundSystem.audioContext && soundSystem.audioContext.state === 'suspended') {
+            soundSystem.audioContext.resume();
+        }
+        addSoundEffects();
+        document.removeEventListener('click', initSounds);
+    }, { once: true });
+
+    // Add sound toggle button to the page
+    function createSoundToggle() {
+        const soundToggle = document.createElement('button');
+        soundToggle.innerHTML = '🔊';
+        soundToggle.className = 'sound-toggle';
+        soundToggle.title = 'Toggle Sound Effects';
+        soundToggle.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #333;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        `;
+
+        soundToggle.addEventListener('click', () => {
+            const isEnabled = soundSystem.toggle();
+            soundToggle.innerHTML = isEnabled ? '🔊' : '🔇';
+            soundToggle.title = isEnabled ? 'Disable Sound Effects' : 'Enable Sound Effects';
+            
+            // Play a test sound when enabling
+            if (isEnabled) {
+                soundSystem.play('success');
+            }
+        });
+
+        soundToggle.addEventListener('mouseenter', () => {
+            soundToggle.style.transform = 'scale(1.1)';
+            soundToggle.style.background = 'rgba(255, 255, 255, 1)';
+        });
+
+        soundToggle.addEventListener('mouseleave', () => {
+            soundToggle.style.transform = 'scale(1)';
+            soundToggle.style.background = 'rgba(255, 255, 255, 0.9)';
+        });
+
+        document.body.appendChild(soundToggle);
+    }
+
+    // Create sound toggle button
+    createSoundToggle();
 });
 
 // Initialize all interactive desk elements
