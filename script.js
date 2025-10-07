@@ -6,7 +6,7 @@ class SoundSystem {
         this.audioContext = null;
         this.sounds = {};
         this.isEnabled = true;
-        this.volume = 0.3;
+        this.volume = 0.2;
         this.init();
     }
 
@@ -21,64 +21,128 @@ class SoundSystem {
     }
 
     createSounds() {
-        // Create different sound types
+        // Create keyboard-like sounds
         this.sounds = {
-            click: this.createTone(800, 0.1, 'sine'),
-            hover: this.createTone(600, 0.05, 'sine'),
-            navigation: this.createTone(1000, 0.15, 'triangle'),
-            button: this.createTone(900, 0.12, 'square'),
-            keypress: this.createTone(700, 0.08, 'sawtooth'),
-            success: this.createChord([523, 659, 784], 0.2),
-            notification: this.createTone(1200, 0.1, 'sine')
+            click: this.createKeyboardSound([800, 1200], 0.08),
+            hover: this.createKeyboardSound([600, 900], 0.04),
+            navigation: this.createKeyboardSound([1000, 1400], 0.1),
+            button: this.createKeyboardSound([900, 1300], 0.09),
+            keypress: this.createKeyboardSound([700, 1100, 1500], 0.06),
+            success: this.createKeyboardChord([523, 659, 784], 0.15),
+            notification: this.createKeyboardSound([1200, 1600], 0.08)
         };
     }
 
-    createTone(frequency, duration, waveType = 'sine') {
+    createKeyboardSound(frequencies, duration) {
         return () => {
             if (!this.audioContext || !this.isEnabled) return;
 
-            const oscillator = this.audioContext.createOscillator();
-            const gainNode = this.audioContext.createGain();
+            // Create multiple oscillators for richer keyboard sound
+            frequencies.forEach((freq, index) => {
+                // Main tone
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                const filter = this.audioContext.createBiquadFilter();
 
-            oscillator.connect(gainNode);
-            gainNode.connect(this.audioContext.destination);
+                oscillator.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
 
-            oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
-            oscillator.type = waveType;
+                // Keyboard-like frequency with slight randomness
+                const randomOffset = (Math.random() - 0.5) * 50;
+                oscillator.frequency.setValueAtTime(freq + randomOffset, this.audioContext.currentTime);
+                oscillator.type = index === 0 ? 'square' : 'triangle';
 
-            // Create envelope for natural sound
-            gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(this.volume, this.audioContext.currentTime + 0.01);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
+                // High-pass filter for crisp keyboard sound
+                filter.type = 'highpass';
+                filter.frequency.setValueAtTime(200, this.audioContext.currentTime);
+                filter.Q.setValueAtTime(1, this.audioContext.currentTime);
 
-            oscillator.start(this.audioContext.currentTime);
-            oscillator.stop(this.audioContext.currentTime + duration);
+                // Sharp attack and quick decay like keyboard
+                const startTime = this.audioContext.currentTime + (index * 0.005);
+                gainNode.gain.setValueAtTime(0, startTime);
+                gainNode.gain.linearRampToValueAtTime(this.volume * (1 - index * 0.3), startTime + 0.005);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+                oscillator.start(startTime);
+                oscillator.stop(startTime + duration);
+            });
+
+            // Add noise component for realistic keyboard click
+            this.addKeyboardNoise(duration);
         };
     }
 
-    createChord(frequencies, duration) {
+    addKeyboardNoise(duration) {
+        if (!this.audioContext || !this.isEnabled) return;
+
+        // Create white noise for keyboard click
+        const bufferSize = this.audioContext.sampleRate * duration;
+        const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+
+        // Generate white noise
+        for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+        }
+
+        const noiseSource = this.audioContext.createBufferSource();
+        const noiseGain = this.audioContext.createGain();
+        const noiseFilter = this.audioContext.createBiquadFilter();
+
+        noiseSource.buffer = noiseBuffer;
+        noiseSource.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(this.audioContext.destination);
+
+        // High-pass filter for crisp noise
+        noiseFilter.type = 'highpass';
+        noiseFilter.frequency.setValueAtTime(2000, this.audioContext.currentTime);
+
+        // Quick burst of noise
+        noiseGain.gain.setValueAtTime(0, this.audioContext.currentTime);
+        noiseGain.gain.linearRampToValueAtTime(this.volume * 0.1, this.audioContext.currentTime + 0.002);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration * 0.3);
+
+        noiseSource.start(this.audioContext.currentTime);
+        noiseSource.stop(this.audioContext.currentTime + duration);
+    }
+
+    createKeyboardChord(frequencies, duration) {
         return () => {
             if (!this.audioContext || !this.isEnabled) return;
 
             frequencies.forEach((freq, index) => {
                 setTimeout(() => {
+                    // Create keyboard-like chord sound
                     const oscillator = this.audioContext.createOscillator();
                     const gainNode = this.audioContext.createGain();
+                    const filter = this.audioContext.createBiquadFilter();
 
-                    oscillator.connect(gainNode);
+                    oscillator.connect(filter);
+                    filter.connect(gainNode);
                     gainNode.connect(this.audioContext.destination);
 
                     oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
-                    oscillator.type = 'sine';
+                    oscillator.type = 'square';
 
+                    // Filter for keyboard-like tone
+                    filter.type = 'bandpass';
+                    filter.frequency.setValueAtTime(freq * 2, this.audioContext.currentTime);
+                    filter.Q.setValueAtTime(2, this.audioContext.currentTime);
+
+                    // Keyboard-like envelope
                     gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-                    gainNode.gain.linearRampToValueAtTime(this.volume * 0.3, this.audioContext.currentTime + 0.01);
+                    gainNode.gain.linearRampToValueAtTime(this.volume * 0.2, this.audioContext.currentTime + 0.01);
                     gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
 
                     oscillator.start(this.audioContext.currentTime);
                     oscillator.stop(this.audioContext.currentTime + duration);
-                }, index * 50);
+                }, index * 30);
             });
+
+            // Add noise for chord
+            this.addKeyboardNoise(duration);
         };
     }
 
