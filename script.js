@@ -6,7 +6,7 @@ class SoundSystem {
         this.audioContext = null;
         this.sounds = {};
         this.isEnabled = true;
-        this.volume = 0.2;
+        this.volume = 0.4;
         this.init();
     }
 
@@ -21,128 +21,195 @@ class SoundSystem {
     }
 
     createSounds() {
-        // Create keyboard-like sounds
+        // Create heavy metal keyboard sounds
         this.sounds = {
-            click: this.createKeyboardSound([800, 1200], 0.08),
-            hover: this.createKeyboardSound([600, 900], 0.04),
-            navigation: this.createKeyboardSound([1000, 1400], 0.1),
-            button: this.createKeyboardSound([900, 1300], 0.09),
-            keypress: this.createKeyboardSound([700, 1100, 1500], 0.06),
-            success: this.createKeyboardChord([523, 659, 784], 0.15),
-            notification: this.createKeyboardSound([1200, 1600], 0.08)
+            click: this.createHeavyMetalSound([220, 440, 880], 0.15, 'aggressive'),
+            hover: this.createHeavyMetalSound([165, 330], 0.08, 'subtle'),
+            navigation: this.createHeavyMetalSound([110, 220, 440, 880], 0.2, 'power'),
+            button: this.createHeavyMetalSound([146, 293, 587], 0.18, 'punch'),
+            keypress: this.createHeavyMetalSound([196, 392, 784], 0.12, 'strike'),
+            success: this.createMetalChord([82, 110, 146, 196], 0.3),
+            notification: this.createHeavyMetalSound([330, 660, 1320], 0.15, 'alert')
         };
     }
 
-    createKeyboardSound(frequencies, duration) {
+    createHeavyMetalSound(frequencies, duration, style) {
         return () => {
             if (!this.audioContext || !this.isEnabled) return;
 
-            // Create multiple oscillators for richer keyboard sound
+            // Create multiple oscillators for heavy metal sound
             frequencies.forEach((freq, index) => {
-                // Main tone
+                // Main heavy tone
                 const oscillator = this.audioContext.createOscillator();
                 const gainNode = this.audioContext.createGain();
+                const distortion = this.createDistortion();
                 const filter = this.audioContext.createBiquadFilter();
 
-                oscillator.connect(filter);
+                oscillator.connect(distortion);
+                distortion.connect(filter);
                 filter.connect(gainNode);
                 gainNode.connect(this.audioContext.destination);
 
-                // Keyboard-like frequency with slight randomness
-                const randomOffset = (Math.random() - 0.5) * 50;
-                oscillator.frequency.setValueAtTime(freq + randomOffset, this.audioContext.currentTime);
-                oscillator.type = index === 0 ? 'square' : 'triangle';
+                // Heavy metal frequency settings
+                oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
+                oscillator.type = index === 0 ? 'sawtooth' : 'square';
 
-                // High-pass filter for crisp keyboard sound
-                filter.type = 'highpass';
-                filter.frequency.setValueAtTime(200, this.audioContext.currentTime);
-                filter.Q.setValueAtTime(1, this.audioContext.currentTime);
+                // Aggressive filtering for metal sound
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(freq * 4, this.audioContext.currentTime);
+                filter.Q.setValueAtTime(15, this.audioContext.currentTime);
 
-                // Sharp attack and quick decay like keyboard
-                const startTime = this.audioContext.currentTime + (index * 0.005);
+                // Heavy metal envelope - powerful attack
+                const startTime = this.audioContext.currentTime + (index * 0.01);
                 gainNode.gain.setValueAtTime(0, startTime);
-                gainNode.gain.linearRampToValueAtTime(this.volume * (1 - index * 0.3), startTime + 0.005);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                
+                if (style === 'power' || style === 'aggressive') {
+                    gainNode.gain.linearRampToValueAtTime(this.volume * (1.2 - index * 0.2), startTime + 0.02);
+                    gainNode.gain.exponentialRampToValueAtTime(this.volume * 0.3, startTime + duration * 0.3);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                } else {
+                    gainNode.gain.linearRampToValueAtTime(this.volume * (0.8 - index * 0.15), startTime + 0.01);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                }
 
                 oscillator.start(startTime);
                 oscillator.stop(startTime + duration);
             });
 
-            // Add noise component for realistic keyboard click
-            this.addKeyboardNoise(duration);
+            // Add heavy metal noise and harmonics
+            this.addMetalNoise(duration, style);
+            this.addHarmonics(frequencies[0], duration, style);
         };
     }
 
-    addKeyboardNoise(duration) {
+    createDistortion() {
+        const waveShaperNode = this.audioContext.createWaveShaper();
+        const samples = 44100;
+        const curve = new Float32Array(samples);
+        const deg = Math.PI / 180;
+
+        // Heavy distortion curve for metal sound
+        for (let i = 0; i < samples; i++) {
+            const x = (i * 2) / samples - 1;
+            curve[i] = ((3 + 20) * x * 20 * deg) / (Math.PI + 20 * Math.abs(x));
+        }
+
+        waveShaperNode.curve = curve;
+        waveShaperNode.oversample = '4x';
+        return waveShaperNode;
+    }
+
+    addMetalNoise(duration, style) {
         if (!this.audioContext || !this.isEnabled) return;
 
-        // Create white noise for keyboard click
+        // Create aggressive noise for metal sound
         const bufferSize = this.audioContext.sampleRate * duration;
         const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
         const output = noiseBuffer.getChannelData(0);
 
-        // Generate white noise
+        // Generate heavy noise
         for (let i = 0; i < bufferSize; i++) {
-            output[i] = Math.random() * 2 - 1;
+            output[i] = (Math.random() * 2 - 1) * (style === 'power' ? 0.8 : 0.4);
         }
 
         const noiseSource = this.audioContext.createBufferSource();
         const noiseGain = this.audioContext.createGain();
         const noiseFilter = this.audioContext.createBiquadFilter();
+        const noiseDistortion = this.createDistortion();
 
         noiseSource.buffer = noiseBuffer;
-        noiseSource.connect(noiseFilter);
+        noiseSource.connect(noiseDistortion);
+        noiseDistortion.connect(noiseFilter);
         noiseFilter.connect(noiseGain);
         noiseGain.connect(this.audioContext.destination);
 
-        // High-pass filter for crisp noise
-        noiseFilter.type = 'highpass';
-        noiseFilter.frequency.setValueAtTime(2000, this.audioContext.currentTime);
+        // Heavy bandpass filter for aggressive noise
+        noiseFilter.type = 'bandpass';
+        noiseFilter.frequency.setValueAtTime(800, this.audioContext.currentTime);
+        noiseFilter.Q.setValueAtTime(10, this.audioContext.currentTime);
 
-        // Quick burst of noise
+        // Aggressive noise envelope
         noiseGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-        noiseGain.gain.linearRampToValueAtTime(this.volume * 0.1, this.audioContext.currentTime + 0.002);
-        noiseGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration * 0.3);
+        noiseGain.gain.linearRampToValueAtTime(this.volume * 0.3, this.audioContext.currentTime + 0.005);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration * 0.4);
 
         noiseSource.start(this.audioContext.currentTime);
         noiseSource.stop(this.audioContext.currentTime + duration);
     }
 
-    createKeyboardChord(frequencies, duration) {
+    addHarmonics(baseFreq, duration, style) {
+        if (!this.audioContext || !this.isEnabled) return;
+
+        // Add heavy metal harmonics
+        const harmonics = [2, 3, 4, 5, 7];
+        
+        harmonics.forEach((harmonic, index) => {
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+            const filter = this.audioContext.createBiquadFilter();
+
+            oscillator.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+
+            oscillator.frequency.setValueAtTime(baseFreq * harmonic, this.audioContext.currentTime);
+            oscillator.type = 'sawtooth';
+
+            // Heavy filtering for harmonics
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(baseFreq * harmonic, this.audioContext.currentTime);
+            filter.Q.setValueAtTime(8, this.audioContext.currentTime);
+
+            // Harmonic envelope
+            const startTime = this.audioContext.currentTime + (index * 0.003);
+            gainNode.gain.setValueAtTime(0, startTime);
+            gainNode.gain.linearRampToValueAtTime(this.volume * (0.2 / (harmonic * 0.5)), startTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration * 0.6);
+
+            oscillator.start(startTime);
+            oscillator.stop(startTime + duration);
+        });
+    }
+
+    createMetalChord(frequencies, duration) {
         return () => {
             if (!this.audioContext || !this.isEnabled) return;
 
             frequencies.forEach((freq, index) => {
                 setTimeout(() => {
-                    // Create keyboard-like chord sound
+                    // Create heavy metal chord sound
                     const oscillator = this.audioContext.createOscillator();
                     const gainNode = this.audioContext.createGain();
                     const filter = this.audioContext.createBiquadFilter();
+                    const distortion = this.createDistortion();
 
-                    oscillator.connect(filter);
+                    oscillator.connect(distortion);
+                    distortion.connect(filter);
                     filter.connect(gainNode);
                     gainNode.connect(this.audioContext.destination);
 
                     oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
-                    oscillator.type = 'square';
+                    oscillator.type = 'sawtooth';
 
-                    // Filter for keyboard-like tone
-                    filter.type = 'bandpass';
-                    filter.frequency.setValueAtTime(freq * 2, this.audioContext.currentTime);
-                    filter.Q.setValueAtTime(2, this.audioContext.currentTime);
+                    // Heavy metal chord filtering
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(freq * 6, this.audioContext.currentTime);
+                    filter.Q.setValueAtTime(12, this.audioContext.currentTime);
 
-                    // Keyboard-like envelope
+                    // Powerful chord envelope
                     gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-                    gainNode.gain.linearRampToValueAtTime(this.volume * 0.2, this.audioContext.currentTime + 0.01);
+                    gainNode.gain.linearRampToValueAtTime(this.volume * 0.4, this.audioContext.currentTime + 0.02);
+                    gainNode.gain.exponentialRampToValueAtTime(this.volume * 0.1, this.audioContext.currentTime + duration * 0.4);
                     gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
 
                     oscillator.start(this.audioContext.currentTime);
                     oscillator.stop(this.audioContext.currentTime + duration);
-                }, index * 30);
+                }, index * 20);
             });
 
-            // Add noise for chord
-            this.addKeyboardNoise(duration);
+            // Add heavy noise and harmonics for chord
+            this.addMetalNoise(duration, 'power');
+            this.addHarmonics(frequencies[0], duration, 'power');
         };
     }
 
