@@ -35,9 +35,9 @@
     --primary-color: #60a5fa;
     --secondary-color: #3b82f6;
     --accent-color: #93c5fd;
-    --text-primary: #1f2937;
-    --text-secondary: #374151;
-    --text-light: #6b7280;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-light: #9ca3af;
     --bg-primary: #111827;
     --bg-secondary: #1f2937;
     --bg-tertiary: #374151;
@@ -54,29 +54,29 @@
     --laptop-dark: #1a202c;
     --screen-bg: #000000;
     
-    /* Dark Hero Background - Light Red */
-    --hero-bg: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
-    --hero-overlay-1: rgba(239, 68, 68, 0.15);
-    --hero-overlay-2: rgba(220, 38, 38, 0.1);
-    --hero-overlay-3: rgba(248, 113, 113, 0.12);
+    /* Dark Hero Background */
+    --hero-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --hero-overlay-1: rgba(99, 102, 241, 0.2);
+    --hero-overlay-2: rgba(168, 85, 247, 0.2);
+    --hero-overlay-3: rgba(59, 130, 246, 0.15);
 }
 
 /* Dark Mode Title Overrides for Better Visibility */
 [data-theme="dark"] .name {
-    background: linear-gradient(135deg, #7c2d12, #991b1b);
+    background: linear-gradient(135deg, #93c5fd, #c4b5fd);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: brightness(1.1) contrast(1.2);
+    filter: brightness(1.2) contrast(1.1);
 }
 
 [data-theme="dark"] .title {
-    color: #374151;
+    color: #f1f5f9;
     font-weight: 600;
 }
 
 [data-theme="dark"] .skills-preview h3 {
-    color: #1f2937;
+    color: #f9fafb;
     font-weight: 700;
 }
 
@@ -88,32 +88,32 @@
 }
 
 [data-theme="dark"] .info-card h3 {
-    color: #1f2937;
+    color: #f9fafb;
     font-weight: 700;
 }
 
 [data-theme="dark"] .content-section h2 {
-    color: #1f2937;
+    color: #f9fafb;
     font-weight: 700;
 }
 
 [data-theme="dark"] .timeline-content h3 {
-    color: #1f2937;
+    color: #f9fafb;
     font-weight: 700;
 }
 
 [data-theme="dark"] .about-intro h3 {
-    color: #1f2937;
+    color: #f9fafb;
     font-weight: 700;
 }
 
 [data-theme="dark"] .project-header h3 {
-    color: #1f2937;
+    color: #f9fafb;
     font-weight: 700;
 }
 
 [data-theme="dark"] .email-contact-section h3 {
-    color: #1f2937;
+    color: #f9fafb;
     font-weight: 700;
 }
 
