@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surender Gyanmote - Oracle Database & Cloud Solutions Architect</title>
+    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,6 +23,16 @@
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
+            <div class="theme-toggle-container">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <div class="toggle-track">
+                        <div class="toggle-thumb">
+                            <i class="fas fa-sun sun-icon"></i>
+                            <i class="fas fa-moon moon-icon"></i>
+                        </div>
+                    </div>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -35,64 +46,93 @@
                 <div class="laptop" id="laptop">
                     <div class="laptop-screen">
                         <div class="screen-content">
-                            <div class="terminal-window">
-                                <div class="terminal-header">
-                                    <div class="terminal-buttons">
-                                        <span class="btn-close"></span>
-                                        <span class="btn-minimize"></span>
-                                        <span class="btn-maximize"></span>
-                                    </div>
-                                    <div class="terminal-title">portfolio.sh</div>
+                            <!-- Portfolio Header -->
+                            <div class="portfolio-header">
+                                <div class="window-controls">
+                                    <div class="control red"></div>
+                                    <div class="control yellow"></div>
+                                    <div class="control green"></div>
                                 </div>
-                                <div class="terminal-body">
-                                    <div class="terminal-line">
-                                        <span class="prompt">$</span>
-                                        <span class="command">whoami</span>
+                                <div class="url-bar">
+                                    <span>surender-gyanmote.dev</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Main Portfolio Content -->
+                            <div class="portfolio-content">
+                                <div class="hero-section">
+                                    <div class="profile-image">
+                                        <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                                            <defs>
+                                                <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                                </linearGradient>
+                                            </defs>
+                                            <circle cx="60" cy="60" r="60" fill="url(#avatarGradient)"/>
+                                            <text x="60" y="75" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="white">SG</text>
+                                        </svg>
+                                        <div class="status-indicator"></div>
                                     </div>
-                                    <div class="terminal-output">
-                                        <div class="profile-info">
-                                            <h1 class="name">Surender Gyanmote</h1>
-                                            <p class="title">Gen AI Architect & Cloud Solutions Expert</p>
-                                            <div class="stats-grid">
-                                                <div class="stat-item">
-                                                    <span class="stat-number">26+</span>
-                                                    <span class="stat-label">Years Experience</span>
-                                                </div>
-                                                <div class="stat-item">
-                                                    <span class="stat-number">200+</span>
-                                                    <span class="stat-label">Migrations Led</span>
-                                                </div>
-                                                <div class="stat-item">
-                                                    <span class="stat-number">50+</span>
-                                                    <span class="stat-label">Cloud Projects</span>
-                                                </div>
+                                    
+                                    <div class="intro-content">
+                                        <h1 class="name">Surender Gyanmote</h1>
+                                        <p class="title">Gen AI Architect & Cloud Solutions Expert</p>
+                                        <p class="description">
+                                            Transforming businesses with cutting-edge AI solutions and cloud architecture. 
+                                            26+ years of experience in enterprise technology leadership.
+                                        </p>
+                                        
+                                        <div class="quick-stats">
+                                            <div class="stat">
+                                                <span class="number">26+</span>
+                                                <span class="label">Years</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="number">200+</span>
+                                                <span class="label">Migrations</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="number">50+</span>
+                                                <span class="label">Projects</span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="cta-buttons">
+                                            <button class="btn-primary" onclick="openSection('about')">
+                                                <i class="fas fa-user"></i>
+                                                About Me
+                                            </button>
+                                            <button class="btn-secondary" onclick="openSection('contact')">
+                                                <i class="fas fa-envelope"></i>
+                                                Get In Touch
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="terminal-line">
-                                        <span class="prompt">$</span>
-                                        <span class="command typing-animation">cat skills.txt</span>
-                                    </div>
-                                    <div class="skills-output">
-                                        <div class="skill-category">
-                                            <span class="category-title">// AI & GenAI</span>
+                                </div>
+                                
+                                <!-- Skills Preview -->
+                                <div class="skills-preview">
+                                    <h3>Core Expertise</h3>
+                                    <div class="skill-categories">
+                                        <div class="skill-group">
+                                            <span class="category-label">AI & GenAI</span>
                                             <div class="skill-tags">
                                                 <span class="skill-tag ai">AI Agentic Solutions</span>
                                                 <span class="skill-tag ai">Generative AI</span>
                                                 <span class="skill-tag ai">LLM Integration</span>
                                             </div>
                                         </div>
-                                        <div class="skill-category">
-                                            <span class="category-title">// Cloud Platforms</span>
+                                        <div class="skill-group">
+                                            <span class="category-label">Cloud Platforms</span>
                                             <div class="skill-tags">
                                                 <span class="skill-tag cloud">Oracle Cloud (OCI)</span>
                                                 <span class="skill-tag cloud">AWS</span>
                                                 <span class="skill-tag cloud">Azure</span>
-                                                <span class="skill-tag cloud">Google Cloud</span>
                                             </div>
                                         </div>
-                                        <div class="skill-category">
-                                            <span class="category-title">// Database & Systems</span>
+                                        <div class="skill-group">
+                                            <span class="category-label">Database & Systems</span>
                                             <div class="skill-tags">
                                                 <span class="skill-tag db">Oracle DBA</span>
                                                 <span class="skill-tag db">RAC & Data Guard</span>
@@ -100,19 +140,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="terminal-line">
-                                        <span class="prompt">$</span>
-                                        <span class="cursor-blink">_</span>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="cta-section">
-                                <button class="btn-primary" onclick="openSection('about')">
-                                    <i class="fas fa-user"></i> About Me
-                                </button>
-                                <button class="btn-secondary" onclick="openSection('contact')">
-                                    <i class="fas fa-envelope"></i> Contact
-                                </button>
                             </div>
                         </div>
                     </div>

@@ -21,197 +21,150 @@ class SoundSystem {
     }
 
     createSounds() {
-        // Create heavy metal keyboard sounds
+        // Create soft click sounds for all interactions
         this.sounds = {
-            click: this.createHeavyMetalSound([220, 440, 880], 0.15, 'aggressive'),
-            hover: this.createHeavyMetalSound([165, 330], 0.08, 'subtle'),
-            navigation: this.createHeavyMetalSound([110, 220, 440, 880], 0.2, 'power'),
-            button: this.createHeavyMetalSound([146, 293, 587], 0.18, 'punch'),
-            keypress: this.createHeavyMetalSound([196, 392, 784], 0.12, 'strike'),
-            success: this.createMetalChord([82, 110, 146, 196], 0.3),
-            notification: this.createHeavyMetalSound([330, 660, 1320], 0.15, 'alert')
+            click: this.createSoftClickSound('standard'),
+            hover: this.createSoftClickSound('subtle'),
+            navigation: this.createSoftClickSound('navigation'),
+            button: this.createSoftClickSound('button'),
+            keypress: this.createSoftClickSound('standard'),
+            success: this.createSoftClickSound('success'),
+            notification: this.createSoftClickSound('notification')
         };
     }
 
-    createHeavyMetalSound(frequencies, duration, style) {
+    createSoftClickSound(type = 'standard') {
         return () => {
             if (!this.audioContext || !this.isEnabled) return;
 
-            // Create multiple oscillators for heavy metal sound
-            frequencies.forEach((freq, index) => {
-                // Main heavy tone
-                const oscillator = this.audioContext.createOscillator();
-                const gainNode = this.audioContext.createGain();
-                const distortion = this.createDistortion();
-                const filter = this.audioContext.createBiquadFilter();
+            const currentTime = this.audioContext.currentTime;
+            
+            // Mellower sound configurations with warmer, lower frequencies
+            const soundConfig = {
+                'standard': { freq: 280, duration: 0.12, volume: 0.12 },
+                'subtle': { freq: 240, duration: 0.10, volume: 0.06 },
+                'navigation': { freq: 320, duration: 0.11, volume: 0.10 },
+                'button': { freq: 360, duration: 0.13, volume: 0.14 },
+                'success': { freq: 420, duration: 0.15, volume: 0.16 },
+                'notification': { freq: 380, duration: 0.12, volume: 0.13 }
+            };
 
-                oscillator.connect(distortion);
-                distortion.connect(filter);
-                filter.connect(gainNode);
-                gainNode.connect(this.audioContext.destination);
-
-                // Heavy metal frequency settings
-                oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
-                oscillator.type = index === 0 ? 'sawtooth' : 'square';
-
-                // Aggressive filtering for metal sound
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(freq * 4, this.audioContext.currentTime);
-                filter.Q.setValueAtTime(15, this.audioContext.currentTime);
-
-                // Heavy metal envelope - powerful attack
-                const startTime = this.audioContext.currentTime + (index * 0.01);
-                gainNode.gain.setValueAtTime(0, startTime);
-                
-                if (style === 'power' || style === 'aggressive') {
-                    gainNode.gain.linearRampToValueAtTime(this.volume * (1.2 - index * 0.2), startTime + 0.02);
-                    gainNode.gain.exponentialRampToValueAtTime(this.volume * 0.3, startTime + duration * 0.3);
-                    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-                } else {
-                    gainNode.gain.linearRampToValueAtTime(this.volume * (0.8 - index * 0.15), startTime + 0.01);
-                    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-                }
-
-                oscillator.start(startTime);
-                oscillator.stop(startTime + duration);
-            });
-
-            // Add heavy metal noise and harmonics
-            this.addMetalNoise(duration, style);
-            this.addHarmonics(frequencies[0], duration, style);
-        };
-    }
-
-    createDistortion() {
-        const waveShaperNode = this.audioContext.createWaveShaper();
-        const samples = 44100;
-        const curve = new Float32Array(samples);
-        const deg = Math.PI / 180;
-
-        // Heavy distortion curve for metal sound
-        for (let i = 0; i < samples; i++) {
-            const x = (i * 2) / samples - 1;
-            curve[i] = ((3 + 20) * x * 20 * deg) / (Math.PI + 20 * Math.abs(x));
-        }
-
-        waveShaperNode.curve = curve;
-        waveShaperNode.oversample = '4x';
-        return waveShaperNode;
-    }
-
-    addMetalNoise(duration, style) {
-        if (!this.audioContext || !this.isEnabled) return;
-
-        // Create aggressive noise for metal sound
-        const bufferSize = this.audioContext.sampleRate * duration;
-        const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-
-        // Generate heavy noise
-        for (let i = 0; i < bufferSize; i++) {
-            output[i] = (Math.random() * 2 - 1) * (style === 'power' ? 0.8 : 0.4);
-        }
-
-        const noiseSource = this.audioContext.createBufferSource();
-        const noiseGain = this.audioContext.createGain();
-        const noiseFilter = this.audioContext.createBiquadFilter();
-        const noiseDistortion = this.createDistortion();
-
-        noiseSource.buffer = noiseBuffer;
-        noiseSource.connect(noiseDistortion);
-        noiseDistortion.connect(noiseFilter);
-        noiseFilter.connect(noiseGain);
-        noiseGain.connect(this.audioContext.destination);
-
-        // Heavy bandpass filter for aggressive noise
-        noiseFilter.type = 'bandpass';
-        noiseFilter.frequency.setValueAtTime(800, this.audioContext.currentTime);
-        noiseFilter.Q.setValueAtTime(10, this.audioContext.currentTime);
-
-        // Aggressive noise envelope
-        noiseGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-        noiseGain.gain.linearRampToValueAtTime(this.volume * 0.3, this.audioContext.currentTime + 0.005);
-        noiseGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration * 0.4);
-
-        noiseSource.start(this.audioContext.currentTime);
-        noiseSource.stop(this.audioContext.currentTime + duration);
-    }
-
-    addHarmonics(baseFreq, duration, style) {
-        if (!this.audioContext || !this.isEnabled) return;
-
-        // Add heavy metal harmonics
-        const harmonics = [2, 3, 4, 5, 7];
-        
-        harmonics.forEach((harmonic, index) => {
+            const config = soundConfig[type] || soundConfig['standard'];
+            
+            // Create main click oscillator with warmer tone
             const oscillator = this.audioContext.createOscillator();
             const gainNode = this.audioContext.createGain();
             const filter = this.audioContext.createBiquadFilter();
-
+            const warmthFilter = this.audioContext.createBiquadFilter();
+            
             oscillator.connect(filter);
-            filter.connect(gainNode);
+            filter.connect(warmthFilter);
+            warmthFilter.connect(gainNode);
             gainNode.connect(this.audioContext.destination);
-
-            oscillator.frequency.setValueAtTime(baseFreq * harmonic, this.audioContext.currentTime);
-            oscillator.type = 'sawtooth';
-
-            // Heavy filtering for harmonics
-            filter.type = 'bandpass';
-            filter.frequency.setValueAtTime(baseFreq * harmonic, this.audioContext.currentTime);
-            filter.Q.setValueAtTime(8, this.audioContext.currentTime);
-
-            // Harmonic envelope
-            const startTime = this.audioContext.currentTime + (index * 0.003);
-            gainNode.gain.setValueAtTime(0, startTime);
-            gainNode.gain.linearRampToValueAtTime(this.volume * (0.2 / (harmonic * 0.5)), startTime + 0.01);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration * 0.6);
-
-            oscillator.start(startTime);
-            oscillator.stop(startTime + duration);
-        });
-    }
-
-    createMetalChord(frequencies, duration) {
-        return () => {
-            if (!this.audioContext || !this.isEnabled) return;
-
-            frequencies.forEach((freq, index) => {
-                setTimeout(() => {
-                    // Create heavy metal chord sound
-                    const oscillator = this.audioContext.createOscillator();
-                    const gainNode = this.audioContext.createGain();
-                    const filter = this.audioContext.createBiquadFilter();
-                    const distortion = this.createDistortion();
-
-                    oscillator.connect(distortion);
-                    distortion.connect(filter);
-                    filter.connect(gainNode);
-                    gainNode.connect(this.audioContext.destination);
-
-                    oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
-                    oscillator.type = 'sawtooth';
-
-                    // Heavy metal chord filtering
-                    filter.type = 'lowpass';
-                    filter.frequency.setValueAtTime(freq * 6, this.audioContext.currentTime);
-                    filter.Q.setValueAtTime(12, this.audioContext.currentTime);
-
-                    // Powerful chord envelope
-                    gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-                    gainNode.gain.linearRampToValueAtTime(this.volume * 0.4, this.audioContext.currentTime + 0.02);
-                    gainNode.gain.exponentialRampToValueAtTime(this.volume * 0.1, this.audioContext.currentTime + duration * 0.4);
-                    gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
-
-                    oscillator.start(this.audioContext.currentTime);
-                    oscillator.stop(this.audioContext.currentTime + duration);
-                }, index * 20);
-            });
-
-            // Add heavy noise and harmonics for chord
-            this.addMetalNoise(duration, 'power');
-            this.addHarmonics(frequencies[0], duration, 'power');
+            
+            // Warmer sine wave with slight triangle wave blend for mellowness
+            oscillator.frequency.setValueAtTime(config.freq, currentTime);
+            oscillator.type = 'sine';
+            
+            // Primary low-pass filter for softness
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(config.freq * 1.5, currentTime); // Lower cutoff for mellowness
+            filter.Q.setValueAtTime(0.7, currentTime); // Gentle resonance for warmth
+            
+            // Secondary warmth filter to reduce any remaining harshness
+            warmthFilter.type = 'lowpass';
+            warmthFilter.frequency.setValueAtTime(config.freq * 2.5, currentTime);
+            warmthFilter.Q.setValueAtTime(0.3, currentTime); // Very gentle
+            
+            // Much smoother envelope with gradual attack and extended release
+            gainNode.gain.setValueAtTime(0, currentTime);
+            gainNode.gain.linearRampToValueAtTime(this.volume * config.volume * 0.3, currentTime + 0.008); // Slower attack
+            gainNode.gain.linearRampToValueAtTime(this.volume * config.volume, currentTime + 0.015); // Peak
+            gainNode.gain.exponentialRampToValueAtTime(this.volume * config.volume * 0.6, currentTime + config.duration * 0.4); // Sustain
+            gainNode.gain.exponentialRampToValueAtTime(0.001, currentTime + config.duration); // Gentle release
+            
+            oscillator.start(currentTime);
+            oscillator.stop(currentTime + config.duration);
+            
+            // Add warm sub-harmonic for depth and richness
+            const subHarmonic = this.audioContext.createOscillator();
+            const subGain = this.audioContext.createGain();
+            const subFilter = this.audioContext.createBiquadFilter();
+            
+            subHarmonic.connect(subFilter);
+            subFilter.connect(subGain);
+            subGain.connect(this.audioContext.destination);
+            
+            subHarmonic.frequency.setValueAtTime(config.freq * 0.5, currentTime); // Sub-harmonic for warmth
+            subHarmonic.type = 'triangle'; // Warmer waveform
+            
+            subFilter.type = 'lowpass';
+            subFilter.frequency.setValueAtTime(config.freq * 1.2, currentTime);
+            subFilter.Q.setValueAtTime(0.5, currentTime);
+            
+            subGain.gain.setValueAtTime(0, currentTime);
+            subGain.gain.linearRampToValueAtTime(this.volume * config.volume * 0.2, currentTime + 0.012);
+            subGain.gain.exponentialRampToValueAtTime(0.001, currentTime + config.duration * 0.8);
+            
+            subHarmonic.start(currentTime + 0.003);
+            subHarmonic.stop(currentTime + config.duration);
+            
+            // Add gentle harmonic for richness (for all types, but very subtle)
+            const harmonic = this.audioContext.createOscillator();
+            const harmonicGain = this.audioContext.createGain();
+            const harmonicFilter = this.audioContext.createBiquadFilter();
+            
+            harmonic.connect(harmonicFilter);
+            harmonicFilter.connect(harmonicGain);
+            harmonicGain.connect(this.audioContext.destination);
+            
+            harmonic.frequency.setValueAtTime(config.freq * 1.2, currentTime); // Closer harmonic for mellowness
+            harmonic.type = 'sine';
+            
+            harmonicFilter.type = 'lowpass';
+            harmonicFilter.frequency.setValueAtTime(config.freq * 2, currentTime);
+            harmonicFilter.Q.setValueAtTime(0.4, currentTime);
+            
+            const harmonicVolume = type === 'success' || type === 'button' ? 0.25 : 0.15;
+            harmonicGain.gain.setValueAtTime(0, currentTime);
+            harmonicGain.gain.linearRampToValueAtTime(this.volume * config.volume * harmonicVolume, currentTime + 0.015);
+            harmonicGain.gain.exponentialRampToValueAtTime(0.001, currentTime + config.duration * 0.6);
+            
+            harmonic.start(currentTime + 0.008);
+            harmonic.stop(currentTime + config.duration);
+            
+            // Extremely subtle texture noise (much reduced)
+            if (type !== 'subtle') {
+                const noiseBuffer = this.audioContext.createBuffer(1, this.audioContext.sampleRate * config.duration, this.audioContext.sampleRate);
+                const noiseData = noiseBuffer.getChannelData(0);
+                
+                for (let i = 0; i < noiseData.length; i++) {
+                    noiseData[i] = (Math.random() * 2 - 1) * 0.02; // Even lower noise level
+                }
+                
+                const noiseSource = this.audioContext.createBufferSource();
+                const noiseGain = this.audioContext.createGain();
+                const noiseFilter = this.audioContext.createBiquadFilter();
+                
+                noiseSource.buffer = noiseBuffer;
+                noiseSource.connect(noiseFilter);
+                noiseFilter.connect(noiseGain);
+                noiseGain.connect(this.audioContext.destination);
+                
+                noiseFilter.type = 'bandpass'; // Bandpass instead of highpass for mellowness
+                noiseFilter.frequency.setValueAtTime(config.freq * 0.8, currentTime);
+                noiseFilter.Q.setValueAtTime(2, currentTime); // Narrow band for subtlety
+                
+                noiseGain.gain.setValueAtTime(0, currentTime);
+                noiseGain.gain.linearRampToValueAtTime(this.volume * 0.02, currentTime + 0.005);
+                noiseGain.gain.exponentialRampToValueAtTime(0.001, currentTime + config.duration * 0.4);
+                
+                noiseSource.start(currentTime + 0.002);
+            }
         };
     }
+
+
 
     play(soundName) {
         if (this.sounds[soundName]) {
@@ -231,6 +184,71 @@ class SoundSystem {
 
 // Initialize sound system
 const soundSystem = new SoundSystem();
+
+// Theme Management System
+class ThemeManager {
+    constructor() {
+        this.currentTheme = 'light';
+        this.init();
+    }
+
+    init() {
+        // Check for saved theme preference or default to 'light'
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        this.setTheme(savedTheme);
+        this.setupToggleButton();
+    }
+
+    setTheme(theme) {
+        this.currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        
+        // Update meta theme-color for mobile browsers
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', theme === 'dark' ? '#111827' : '#ffffff');
+        }
+    }
+
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.setTheme(newTheme);
+        
+        // Play theme toggle sound
+        soundSystem.play('button');
+        
+        // Add a subtle animation effect
+        document.body.style.transition = 'all 0.3s ease';
+        setTimeout(() => {
+            document.body.style.transition = '';
+        }, 300);
+    }
+
+    setupToggleButton() {
+        const toggleButton = document.getElementById('theme-toggle');
+        if (toggleButton) {
+            toggleButton.addEventListener('click', () => {
+                this.toggleTheme();
+            });
+            
+            // Add keyboard support
+            toggleButton.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggleTheme();
+                }
+            });
+        }
+    }
+
+    getCurrentTheme() {
+        return this.currentTheme;
+    }
+}
+
+// Initialize theme manager
+const themeManager = new ThemeManager();
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -1173,12 +1191,17 @@ document.addEventListener('DOMContentLoaded', function() {
     loadResumeData();
 });
 
-// Global click sound effect
+// Enhanced Global click sound effect for all elements
 document.addEventListener('click', function(event) {
-    // Play click sound on every click
+    // Ensure sound system is initialized
+    if (!soundSystem.audioContext) {
+        soundSystem.init();
+    }
+    
+    // Play keyboard click sound on every click
     soundSystem.play('click');
     
-    // Add visual click effect
+    // Add visual click effect for all clickable elements
     const clickEffect = document.createElement('div');
     clickEffect.className = 'click-effect';
     clickEffect.style.left = event.clientX + 'px';
@@ -1191,6 +1214,39 @@ document.addEventListener('click', function(event) {
             clickEffect.parentNode.removeChild(clickEffect);
         }
     }, 300);
+}, true); // Use capture phase to ensure it catches all clicks
+
+// Additional event listener for touch devices
+document.addEventListener('touchstart', function(event) {
+    if (!soundSystem.audioContext) {
+        soundSystem.init();
+    }
+    soundSystem.play('click');
+}, true);
+
+// Ensure click sounds work on dynamically added elements
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) { // Element node
+                // Add click sound to any new clickable elements
+                const clickableElements = node.querySelectorAll ? 
+                    node.querySelectorAll('button, a, [onclick], [role="button"], .btn, .card, .nav-link, input[type="submit"], input[type="button"]') : [];
+                
+                clickableElements.forEach(element => {
+                    element.addEventListener('click', function() {
+                        soundSystem.play('click');
+                    });
+                });
+            }
+        });
+    });
+});
+
+// Start observing
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
 });
 
 console.log('🚀 Interactive Portfolio Loaded Successfully!');
