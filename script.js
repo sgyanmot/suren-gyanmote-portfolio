@@ -1173,4 +1173,24 @@ document.addEventListener('DOMContentLoaded', function() {
     loadResumeData();
 });
 
+// Global click sound effect
+document.addEventListener('click', function(event) {
+    // Play click sound on every click
+    soundSystem.play('click');
+    
+    // Add visual click effect
+    const clickEffect = document.createElement('div');
+    clickEffect.className = 'click-effect';
+    clickEffect.style.left = event.clientX + 'px';
+    clickEffect.style.top = event.clientY + 'px';
+    document.body.appendChild(clickEffect);
+    
+    // Remove effect after animation
+    setTimeout(() => {
+        if (clickEffect.parentNode) {
+            clickEffect.parentNode.removeChild(clickEffect);
+        }
+    }, 300);
+});
+
 console.log('🚀 Interactive Portfolio Loaded Successfully!');
