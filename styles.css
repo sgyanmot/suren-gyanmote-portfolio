@@ -175,7 +175,7 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: var(--hero-bg);
     overflow-x: hidden;
     transition: background 0.3s ease, color 0.3s ease;
 }
@@ -320,41 +320,6 @@ body {
     perspective: 1000px;
     position: relative;
     overflow: hidden;
-    /* Light tomato background - applies regardless of theme */
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%) !important;
-}
-
-/* Text styling for hero section on light tomato background */
-.hero-desk .name {
-    background: linear-gradient(135deg, #7c2d12, #991b1b) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
-    filter: brightness(1.1) contrast(1.2) !important;
-}
-
-.hero-desk .title {
-    color: #374151 !important;
-    font-weight: 600;
-}
-
-.hero-desk .description {
-    color: #4b5563 !important;
-}
-
-.hero-desk h1,
-.hero-desk h2,
-.hero-desk h3 {
-    color: #1f2937 !important;
-    font-weight: 600;
-}
-
-.hero-desk .quick-stats .number {
-    color: #1f2937 !important;
-}
-
-.hero-desk .quick-stats .label {
-    color: #374151 !important;
 }
 
 /* Profile Image Styles */
@@ -1801,79 +1766,6 @@ body {
     background: var(--bg-secondary);
     border-color: var(--primary-color);
     color: var(--text-primary);
-}
-
-/* Ensure all content sections except hero maintain dark theme */
-.content-section {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
-    color: #f9fafb !important;
-    min-height: 100vh;
-    padding: 6rem 2rem 2rem;
-}
-
-.content-section h2 {
-    color: #f9fafb !important;
-    font-weight: 700;
-}
-
-.content-section h3 {
-    color: #f9fafb !important;
-    font-weight: 700;
-}
-
-.content-section p {
-    color: #d1d5db !important;
-}
-
-/* Info cards dark theme */
-.info-card {
-    background: rgba(31, 41, 55, 0.8) !important;
-    border: 1px solid rgba(55, 65, 81, 0.5) !important;
-    color: #f9fafb !important;
-}
-
-.info-card h3 {
-    color: #f9fafb !important;
-    font-weight: 700;
-}
-
-.info-card p {
-    color: #d1d5db !important;
-}
-
-/* Timeline and project cards dark theme */
-.timeline-content {
-    background: rgba(31, 41, 55, 0.8) !important;
-    border: 1px solid rgba(55, 65, 81, 0.5) !important;
-    color: #f9fafb !important;
-}
-
-.timeline-content h3 {
-    color: #f9fafb !important;
-    font-weight: 700;
-}
-
-.project-card {
-    background: rgba(31, 41, 55, 0.8) !important;
-    border: 1px solid rgba(55, 65, 81, 0.5) !important;
-    color: #f9fafb !important;
-}
-
-.project-card h3 {
-    color: #f9fafb !important;
-    font-weight: 700;
-}
-
-/* Contact section dark theme */
-.contact-item {
-    background: rgba(31, 41, 55, 0.8) !important;
-    border: 1px solid rgba(55, 65, 81, 0.5) !important;
-    color: #f9fafb !important;
-}
-
-.contact-item h3 {
-    color: #f9fafb !important;
-    font-weight: 700;
 }
 
 /* Responsive Design */
