@@ -61,6 +61,62 @@
     --hero-overlay-3: rgba(59, 130, 246, 0.15);
 }
 
+/* Dark Mode Title Overrides for Better Visibility */
+[data-theme="dark"] .name {
+    background: linear-gradient(135deg, #93c5fd, #c4b5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: brightness(1.2) contrast(1.1);
+}
+
+[data-theme="dark"] .title {
+    color: #f1f5f9;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .skills-preview h3 {
+    color: #f9fafb;
+    font-weight: 700;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .info-card h3 {
+    color: #f9fafb;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .content-section h2 {
+    color: #f9fafb;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .timeline-content h3 {
+    color: #f9fafb;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .about-intro h3 {
+    color: #f9fafb;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .project-header h3 {
+    color: #f9fafb;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .email-contact-section h3 {
+    color: #f9fafb;
+    font-weight: 700;
+}
+
 * {
     margin: 0;
     padding: 0;
