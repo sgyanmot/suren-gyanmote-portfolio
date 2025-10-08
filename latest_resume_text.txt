@@ -1,0 +1,127 @@
+		
+Surender	Gyanmote	 	
+Phone:	(510)	304-0672   ¨	Email:	sgyanmot@yahoo.com,	sgyanmot@gmail.com		
+LinkedIn:	https://www.linkedin.com/in/gyanmotesurender			
+		
+		
+Security	Program	Manager|Cloud	Solutions,	Database,	Gen	AI	Architect		
+		
+2+	decades	of	Oracle	Database	design,	development,	database,	System	Administration,	Performance	and	
+Capacity,	Database	Architecture,	Cloud	Solutions	Architecture,	Oracle	Engineered	Systems	Administration,	
+Security	 advisor	 and	 Lead	 Program	 manager	 for	 application	 and	 tools	 security	 in	 Managed	 Cloud	 to	
+support	Risk	Compliance	and	security	teams,	combined	with	5+	years	of	Database	architecture,	design,	
+development,	and	administration.	Expert	in	hybrid	database	solutions	integrating	oracle	RDBMS	database	
+for	multiple	customers.	And,	technical	project	lead	for	migrations	of	200+	customer	environments	to	new	
+generation	 platform	 in	 @oracle	 services.	 As	 Cloud@Customer	 Infra	 team	 member	 and	 Solutions	
+Architect,	worked	on	multiple	migrations,	cutovers	and	go-live	of	critical	Production	Systems	for	Managed	
+Cloud	 Customers	 successfully.	 	 Key	 lead	 in	 Disaster	 Recovery	 Services	 like	 Discovery,	 assessment,	 and	
+implementation	of	it	including	FSDR	(Full	stack	Disaster	Recovery)	for	OIC	Gen3.	As	a	lead,	worked	very	
+closely	with	teams	across	the	global	regions	to	support	Managed	Cloud	customers.			
+CertiZied	OCI	2024,2021,2020,2019	Architect	Professional,	AWS	2021	–	CertiZied	Solutions	Architect	
+Associate,	certiZied	on	Microsoft	Azure	Fundamentals,	and	Oracle	Cloud	Infrastructure	2024	AI	
+Foundations	Associate	(1Z0-1122-24).		Multiple	years	of	certiZications	on	HIPPA,	GDPR,	Secured	
+application	development,	secured	coding,	and	customer	data	privacy	with	internal	trainings	in	oracle	
+corporation.	
+		
+✓ 2+	 decades	 of	 Oracle	 Database	 design,	 architecture,	 development,	 Database	 and	 System	
+Administration,	Performance	tuning,	application	security	programs,	and	security	advisor.	
+✓ 9+	 years	 of	 secured	 applications	 and	 tools	 development	 with	 secure	 SDLC,	 DevSecOps	
+collaboration,	 code	 reviews	 on	 security	 threats,	 Ports	 security,	 Pen	 testing,	 open-source	 risk	
+analysis.	Continuous	Vulnerability	analysis		and	remediations	using	Qualys	scanner,	resolutions	on	
+corporate	network	and	public	facing	web	applications.		
+✓ ProZicient	 in	 Oracle	 Cloud	 Infrastructure	 (OCI)	 administration,	 including	 IAM,	 security	 policy	
+implementation,	network	architecture	(VCN,	VPN,	Zirewall	conZiguration,	load	balancing),	compute	
+resource	management,	object/block	storage,	monitoring	solutions,	and	backup	strategies.	And,	Full	
+stack	disaster	recovery	services	for	OIC	Gen3.	
+✓ Managed	 200+	 environments	 by	 Linux/Solaris	 system	 administration	 across	 LVM	 conZiguration,	
+RAID	management,	NFS	services,	and	security	hardening	(SSH	conZiguration,	Zirewall	rules).	
+✓ Initiative	on	enablement	of	OCI	AI	infrastructure	services.	
+
+✓ 10+	 years	 of	 enterprise	 Database	 Administration	 on	 Oracle	 Engineered	 Systems	 -	 Exadata	
+alongside	of	Oracle	traditional	platforms	with	scaling,	automated	failover,	and	DR	solutions.	With	
+25+	migrations	from	multiple	platforms	to	Exadata	for	global	tier	1	customers	Production	systems.		
+✓ Six	 years	 of	 Oracle	 Cloud	 Infrastructure	 (OCI)	 DBCS,	 EXACS	 and	 EXACC	 (Cloud@customer)	
+database	migrations	and	tenancy	administration	including	network,	security	enablements.		
+✓ Performed	 infrastructure	 automation,	 management	 using	 shell	 scripting,	 Ansible,	 Terraform	
+playbooks.	And,	managed	python	and	perl	scripts.		
+✓ Managed	 Exadata	 operations,	 and	 Exadata	 support	 operational	 processes	 –	 change/incident/
+problem	management,	and	life	cycle	of	operations	in	Oracle	Managed	Cloud	Services	for	10+	years.		
+✓ As	a	Performance	and	capacity	engineer	in	Oracle	Performance	Labs,	exercised	sizing,	capacity,	and	
+tuning	of	3rd	party	products	for	100+	Oracle	Partners.			
+✓ Accomplished	professional,	diversiZied	experience	in	domains	such	as	Engineered	Systems,	Oracle	
+Database	 Performance	 Tuning,	 Capacity	 Planning,	 Escalations	 and	 Outages,	 launching	 new	
+products	 within	 Managed	 Cloud,	 Risk	 &	 Compliance	 and	 Security	 adviser,	 and	 technical	 project	
+management.		
+✓ As	an	Oracle	Developer,	developed	and	implemented	Oracle	Forms,	and	Pro*C	reports	with	PL/SQL	
+procedures,	packages,	and	triggers.		
+Software	Experience	and	Expertise:		
+▪ OCI	AI	Infrastructure	architect				▪OCI	DR/FSDR	architect					▪ Terraform	as	IoC	in	OCI	
+▪ Terraform	as	IoC	in	OCI ▪ Oracle	Database	Administration			 
+▪ Architecting	&	Building	Generative	AI	and	AI	Agentic	Solutions	 
+▪ Multi	LLM	models	expertise	on	POCs	with	GitHub	integrations		
+▪ HIPPA	,	GDPR	,	secured	coding,		Ingres/Egres	Rules,	Customer	Data	Privacy	in	application	tooling.	
+▪ Exadata,	Exalogic	    ▪ Oracle	SQL,	PL/SQL.																										▪SQL	Query	Language	
+▪ Shell,	Python					 														▪ Unix,	Linux,	Windows,	Mac			
+PROFESSIONAL	EXPERIENCE	 
+Oracle Corp – Oracle DBA,System, Database & Cloud Solutions Architect                                   Sep 1998 – Jan 2025 	
+▪ 20+	 years	 of	 managing	 Linux	 and	 Solaris	 platforms,	 Oracle	 Database	 environments,	 EXADATA	
+Systems,	Oracle	Cloud	Infrastructure	tenancies	for	enterprise	customers	
+▪ ExaCare	team	member	and	supporting	Tier1	customers	as	SME	for	escalations	and	outages.		
+▪ Led	 planning,	 migrations,	 cutovers,	 and	 go-lives	 of	 cloud	 managed	 customers	 into	 Engineered	
+Systems		
+▪ Led	 the	 effort	 to	 implement	 oracle	 best	 practices,	 and	 production	 ready	 for	 implementation	
+customers.		
+▪ As	a	Performance	Engineer	supported	150+	customers	on	Oracle	technologies	–	databases,	and	E-
+business	Suite.		
+▪ Led	sizing	and	capacity	projects	to	lift	and	shift	from	old	legacy	Dell	servers	to	Intel	X	servers.		
+▪ Worked	with	100+	Oracle	Partners	to	run	Oracle	Technologies	including	Oracle	Databases,	Oracle	
+E-business	Suite	in	Performance	Labs	for	sizing,	capacity,	tuning,	and	implementing	best	practices	
+for	3rd	party	products.		
+▪ Published	white	papers	for	Oracle	Partners	as	deployment	and	best	practices	guides		
+▪ Enablement	of	OCI	AI	Infrastructure	Services	to	Oracle	Customers	
+▪ Disaster	 Recovery	 services	 like	 Discovery,	 Assessment	 and	 Implementation	 including	 FSDR	
+services	for	OIC	Gen3	
+▪ OCI	Tenancy	administration,	and	on-prem	and	OCI	migrations		 	
+PROJECTS		
+Generative	AI	and	AI	Agentic	Solutions	Architect			
+▪ Architected	and	built	multiple	AI	agentic	POCs	
+▪ Built	multiple	AI	Agentic	POCs	and	solutions	using	multi-LLM	models	
+Managed	Cloud	Services	@Customer	Infra			
+▪ Oracle	 Cloud	 Migrations	 from	 Engineered	 Systems	 Involved	 in	 multiple	 global	 customers	
+planning,	 migration,	 cutovers,	 and	 go-lives	 successfully	 onto	 Oracle	 Cloud	 DBAAS,	 EXACS,	
+Object	Storage,	and	Block	Storage		
+Application	/Tools	Security	Program	Manager/	Corp	Security	Advisor	for	Managed	security	tools	
+▪ Led	application	and	tools	development	teams	in	designing	and	delivering	secure	internal	and	
+external	solutions	following	Secure	SDLC	practices,	OWASP	top	ten	as	a	standard,	and	SANS	top	
+25	for	best	coding	standards.	
+▪ As	Program	Manager,	successfully	delivered	multiple	applications	tools	by	collaborating	with	
+corporate	security	architecture	review	board	approvals.	
+Oracle	Linux	,	Solaris,	and	Database,	and	OCI	Database	Cloud	Services	
+▪ Designed	hybrid	solutions	for	multiple	enterprise	clients	combining	Oracle	Linux,	Solaris,	and	
+Oracle	databases	for	transactional	workloads	
+Managed	Cloud	Services	–	Engineered	Systems:		
+▪ GO-LIVES:	Successfully	executed	planning,	migration,	cutover,	and	go-live	activities	for	multiple	
+global	customers	onto	Exadata,	Exalogic,	Exalytics,	SuperCluster,	and	ZFS	storage	platforms.	
+		
+Managed	Cloud	Services	–	Migrations:		
+▪ As	a	technical	lead,	migrated	200+	customer	environments	from	legacy	to	latest	platform.		
+▪ Capacity	 and	 Performance	 team	 lead,	 managed	 oracle	 managed	 cloud	 customers	 production	
+environments		
+		
+Oracle	Performance	Labs	–	Oracle	Partner	products:		
+▪ Show	 cased,	 and	 supported	 100+	 Oracle	 Partners	 products	 to	 be	 deployed	 in	 Oracle	
+technologies	including	Oracle	Databases	and	oracle	E-business	suite	in	Oracle	HQ	performance	
+labs.		
+EDUCATION	AND	ACHIEVEMENTS		
+➢ Master’s	degree	in	computer	science				-			Osmania	University,	Hyderabad,	INDIA.		
+➢ Excellence	Award	of	IT	team	–	HCL	Hewlett	Packard		
+➢ Excellence	Award	for	Cloud	Operations		
+➢ 7	Customer	Services	Pacesetter	Awards		
+➢ Oracle	Cloud	CertiZicates		
+❖ OCI	-	Oracle	Autonomous	Database	Cloud	2019	Specialist	(1Z0-931)		
+❖ OCI	-	Oracle	Cloud	Infrastructure	2019	Architect	Associate	(1Z0-1072-19),	2020	and	2021.	
+❖ OCI	-	Oracle	Cloud	Infrastructure	Architect	Professional	2019,	2020,	2021and	2024.	
+❖ Oracle	Cloud	Infrastructure	2024	AI	Foundations	Associate	(1Z0-1122-24)	
+➢ AWS	CertiZied	Solutions	Architect	–	Associate		
+➢ Microsoft	Azure	Fundamentals	-	AZ-900	
+

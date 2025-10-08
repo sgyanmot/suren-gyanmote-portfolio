@@ -1013,6 +1013,9 @@ function updateWebsiteContent(data) {
 }
 
 function updatePersonalInfo(personalInfo) {
+    // Update page title
+    document.title = `${personalInfo.name} - ${personalInfo.title}`;
+    
     // Update name and title in hero section
     const nameElement = document.querySelector('.name');
     const titleElement = document.querySelector('.title');

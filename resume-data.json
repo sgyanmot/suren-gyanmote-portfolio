@@ -1,90 +1,88 @@
 {
   "personalInfo": {
     "name": "Surender Gyanmote",
-    "title": "Security Program Manager | Cloud Solutions, Database Architect",
+    "title": "Security Program Manager | Cloud Solutions, Database, Gen AI Architect",
     "phone": "(510) 304-0672",
     "email": ["sgyanmot@yahoo.com", "sgyanmot@gmail.com"],
     "linkedin": "https://www.linkedin.com/in/gyanmotesurender",
-    "summary": "2+ decades of Oracle Database design, development, database, System Administration, Performance and Capacity, Database Architecture, Cloud Solutions Architecture, Oracle Engineered Systems Administration, Security advisor and Lead Program manager for application and tools security in Managed Cloud to support Risk Compliance and security teams, combined with 5+ years of Database architecture, design, development, and administration. Expert in hybrid database solutions integrating oracle RDBMS database for multiple customers."
+    "summary": "2+ decades of Oracle Database design, development, database, System Administration, Performance and Capacity, Database Architecture, Cloud Solutions Architecture, Oracle Engineered Systems Administration, Security advisor and Lead Program manager for application and tools security in Managed Cloud to support Risk Compliance and security teams, combined with 5+ years of Database architecture, design, development, and administration. Expert in hybrid database solutions integrating oracle RDBMS database for multiple customers. And, technical project lead for migrations of 200+ customer environments to new generation platform in @oracle services."
   },
   "experience": [
     {
-      "period": "Sep 2003 - Jan 2025",
-      "title": "Technical Program Manager / Managed Cloud Services",
+      "period": "Sep 1998 - Jan 2025",
+      "title": "Oracle DBA, System, Database & Cloud Solutions Architect",
       "company": "Oracle Corporation",
-      "description": "Led planning, migrations, cutovers, and go-lives of managed customers into Engineered Systems (Exadata, Exalogic, Exalytics, Super Cluster, ZFS). Provided OCI Tenancy Administration, Database/System administration, on-prem & OCI migrations, and supported Tier1 customers as SME during escalations/outages.",
+      "description": "Led planning, migrations, cutovers, and go-lives of cloud managed customers into Engineered Systems. Provided OCI Tenancy Administration, Database/System administration, on-prem & OCI migrations, and supported Tier1 customers as SME during escalations/outages.",
       "achievements": [
-        "Led enablement of OCI AI Infrastructure and Disaster Recovery (FSDR) implementations",
+        "Led enablement of OCI AI Infrastructure services and Disaster Recovery (FSDR) implementations",
         "Supported 150+ customers as Performance Engineer on Oracle Databases and E-Business Suite",
         "Drove sizing and capacity initiatives to migrate from legacy Dell to Intel-X servers",
         "Supported 100+ Oracle Partners in Performance Labs on sizing, capacity, tuning, and best practices",
-        "Published whitepapers and deployment guides for Oracle Partners",
-        "Oracle Database administration and System (Linux and Solaris) administration for 200+ environments, 100+ customers",
-        "Led go-lives on Exadata, Exalogic, Exalytics, Super Cluster, and ZFS",
-        "Migrated 200+ environments from legacy to new platforms; led production capacity & performance operations"
+        "ExaCare team member supporting Tier1 customers as SME for escalations and outages",
+        "Technical lead for migrations of 200+ customer environments from legacy to latest platform",
+        "Published white papers for Oracle Partners as deployment and best practices guides",
+        "Managed 200+ environments by Linux/Solaris system administration across LVM configuration, RAID management, NFS services, and security hardening"
       ]
     }
   ],
   "projects": [
     {
-      "title": "Managed Cloud Services - Migrations",
-      "description": "As a technical lead, migrated 200+ customer environments from legacy to latest platform. Capacity and Performance team lead, managed oracle managed cloud customers production environments",
-      "technologies": ["Oracle Cloud", "Exadata", "Exalogic", "Exalytics", "SuperCluster", "ZFS"]
+      "title": "Generative AI and AI Agentic Solutions Architect",
+      "description": "Architected and built multiple AI agentic POCs and solutions using multi-LLM models with GitHub integrations",
+      "technologies": ["Multi-LLM Models", "AI Agentic Solutions", "GitHub Integration", "Generative AI", "POC Development"]
     },
     {
-      "title": "Oracle Performance Labs - Oracle Partner products",
-      "description": "Showcased and supported 100+ Oracle Partners products to be deployed in Oracle technologies including Oracle Databases and oracle E-business suite in Oracle HQ performance labs",
-      "technologies": ["Oracle Database", "E-Business Suite", "Performance Testing"]
+      "title": "Managed Cloud Services @Customer Infra",
+      "description": "Oracle Cloud Migrations from Engineered Systems involving multiple global customers planning, migration, cutovers, and go-lives successfully onto Oracle Cloud DBAAS, EXACS, Object Storage, and Block Storage",
+      "technologies": ["Oracle Cloud", "DBAAS", "EXACS", "Object Storage", "Block Storage", "Migration Planning"]
+    },
+    {
+      "title": "Application/Tools Security Program Manager",
+      "description": "Led application and tools development teams in designing and delivering secure internal and external solutions following Secure SDLC practices, OWASP top ten as a standard, and SANS top 25 for best coding standards",
+      "technologies": ["Secure SDLC", "OWASP", "SANS", "DevSecOps", "Security Architecture", "Risk Compliance"]
+    },
+    {
+      "title": "Oracle Linux, Solaris, and Database, and OCI Database Cloud Services",
+      "description": "Designed hybrid solutions for multiple enterprise clients combining Oracle Linux, Solaris, and Oracle databases for transactional workloads",
+      "technologies": ["Oracle Linux", "Solaris", "Oracle Database", "OCI DBCS", "Hybrid Solutions", "Enterprise Architecture"]
     }
   ],
   "education": [
     {
       "degree": "Master's degree in Computer Science",
-      "institution": "Osmania University, Hyderabad, INDIA"
+      "institution": "Osmania University",
+      "location": "Hyderabad, INDIA"
     }
   ],
   "certifications": [
-    {
-      "name": "OCI - Oracle Autonomous Database Cloud 2019 Specialist",
-      "code": "1Z0-931"
-    },
-    {
-      "name": "OCI - Oracle Cloud Infrastructure 2019 Architect Associate",
-      "code": "1Z0-1072-19",
-      "years": "2020 and 2021"
-    },
-    {
-      "name": "OCI - Oracle Cloud Infrastructure Architect Professional",
-      "years": "2019, 2020, 2021 and 2024"
-    },
-    {
-      "name": "Oracle Cloud Infrastructure 2024 AI Foundations Associate",
-      "code": "1Z0-1122-24"
-    },
-    {
-      "name": "AWS Certified Solutions Architect – Associate"
-    },
-    {
-      "name": "Microsoft Azure Fundamentals",
-      "code": "AZ-900"
-    }
+    "OCI - Oracle Cloud Infrastructure Architect Professional 2019, 2020, 2021 and 2024",
+    "Oracle Cloud Infrastructure 2024 AI Foundations Associate (1Z0-1122-24)",
+    "OCI - Oracle Cloud Infrastructure 2019 Architect Associate (1Z0-1072-19), 2020 and 2021",
+    "OCI - Oracle Autonomous Database Cloud 2019 Specialist (1Z0-931)",
+    "AWS Certified Solutions Architect – Associate",
+    "Microsoft Azure Fundamentals - AZ-900",
+    "Multiple years of certifications on HIPAA, GDPR, Secured application development, secured coding, and customer data privacy"
   ],
   "awards": [
     "Excellence Award of IT team – HCL Hewlett Packard",
-    "Best Team Player of IT Support Team – MCI – Emission Systems",
     "Excellence Award for Cloud Operations",
     "7 Customer Services Pacesetter Awards"
   ],
   "skills": {
-    "databases": ["Oracle Database 12c/19c/21c", "RAC", "Data Guard", "ASM", "RMAN"],
-    "cloud": ["Oracle Cloud Infrastructure (OCI)", "AWS", "Azure", "Google Cloud"],
-    "systems": ["Linux", "Solaris", "Exadata", "Exalogic", "Exalytics"],
-    "specialties": ["Database Architecture", "Performance Tuning", "Disaster Recovery", "Security", "Migration"]
+    "databases": ["Oracle Database", "Oracle SQL", "PL/SQL", "Exadata", "Oracle RDBMS"],
+    "cloud": ["Oracle Cloud Infrastructure (OCI)", "AWS", "Microsoft Azure", "OCI AI Infrastructure", "OCI DR/FSDR"],
+    "ai_genai": ["Generative AI", "AI Agentic Solutions", "Multi-LLM Models", "AI Infrastructure", "GitHub AI Integrations"],
+    "security": ["HIPAA", "GDPR", "Secured Coding", "DevSecOps", "OWASP", "SANS", "Security Architecture", "Risk Compliance"],
+    "systems": ["Linux", "Solaris", "Unix", "Windows", "Mac", "Exalogic"],
+    "programming": ["Shell Scripting", "Python", "Perl", "Pro*C", "Oracle Forms"],
+    "infrastructure": ["Terraform", "Ansible", "Infrastructure Automation", "Network Architecture", "VCN", "VPN", "Firewall"],
+    "specialties": ["Performance Tuning", "Capacity Planning", "Database Migration", "Disaster Recovery", "System Administration", "Technical Project Management"]
   },
   "stats": {
-    "experience": "20+ Years",
+    "experience": "26+ Years",
     "migrations": "200+ Customer Migrations",
     "customers": "150+ Customers Supported",
+    "partners": "100+ Oracle Partners Supported",
     "uptime": "99.9% Uptime Achieved"
   }
 }
