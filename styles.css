@@ -152,6 +152,13 @@
     box-sizing: border-box;
 }
 
+/* Prevent horizontal scrolling on mobile */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
@@ -1190,6 +1197,8 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    padding: 0 1rem;
 }
 
 .content-section h2 {
@@ -1975,5 +1984,109 @@ body {
     .theme-toggle {
         width: 45px;
         height: 22px;
+    }
+}
+
+/* Additional Mobile Alignment Fixes */
+@media (max-width: 768px) {
+    /* Ensure all containers stay within viewport */
+    .container {
+        padding: 0 0.75rem;
+        max-width: 100%;
+    }
+    
+    /* Fix main content sections */
+    .main-content {
+        padding: 1rem 0.5rem;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    /* Ensure desk container doesn't overflow */
+    .desk-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 0.5rem;
+    }
+    
+    /* Fix laptop display on mobile */
+    .laptop {
+        width: 280px;
+        height: 190px;
+        max-width: 90%;
+    }
+    
+    /* Ensure info cards don't overflow */
+    .info-cards {
+        gap: 0.75rem;
+        padding: 0;
+    }
+    
+    .info-card {
+        padding: 0.75rem;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    /* Fix navigation alignment */
+    .nav-container {
+        padding: 0 0.75rem;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    /* Ensure content sections don't overflow */
+    .content-section {
+        padding: 1.5rem 0.75rem;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    /* Fix timeline content */
+    .timeline-content {
+        padding: 0.75rem;
+        margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small screens - more aggressive fixes */
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    .main-content {
+        padding: 0.75rem 0.25rem;
+    }
+    
+    .laptop {
+        width: 240px;
+        height: 160px;
+    }
+    
+    .info-card {
+        padding: 0.5rem;
+    }
+    
+    .nav-container {
+        padding: 0 0.5rem;
+    }
+    
+    .content-section {
+        padding: 1rem 0.5rem;
+    }
+    
+    /* Ensure text doesn't overflow */
+    h1, h2, h3, h4, h5, h6 {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    p, span, div {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 }
