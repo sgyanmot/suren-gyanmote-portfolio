@@ -902,4 +902,272 @@ function showEmailNotification(message, type = 'info') {
     }, 4000);
 }
 
+// Notification System
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        max-width: 400px;
+        animation: slideInRight 0.3s ease-out;
+    `;
+    
+    // Add animation styles
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0;
+            margin-left: auto;
+            opacity: 0.8;
+        }
+        .notification-close:hover {
+            opacity: 1;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+// Resume Data Loading and Synchronization
+async function loadResumeData() {
+    try {
+        const response = await fetch('./resume-data.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const resumeData = await response.json();
+        updateWebsiteContent(resumeData);
+        console.log('✅ Resume data loaded and synchronized successfully!');
+        showNotification('Resume data synchronized successfully!', 'success');
+    } catch (error) {
+        console.error('❌ Error loading resume data:', error);
+        showNotification('Failed to load latest resume data. Using cached content.', 'error');
+    }
+}
+
+function updateWebsiteContent(data) {
+    // Update personal information
+    updatePersonalInfo(data.personalInfo);
+    
+    // Update experience section
+    updateExperienceSection(data.experience);
+    
+    // Update projects section
+    updateProjectsSection(data.projects);
+    
+    // Update about section with latest data
+    updateAboutSection(data);
+    
+    // Update stats
+    updateStats(data.stats);
+}
+
+function updatePersonalInfo(personalInfo) {
+    // Update name and title in hero section
+    const nameElement = document.querySelector('.name');
+    const titleElement = document.querySelector('.title');
+    const descriptionElement = document.querySelector('.description');
+    
+    if (nameElement) nameElement.textContent = personalInfo.name;
+    if (titleElement) titleElement.textContent = personalInfo.title;
+    if (descriptionElement) descriptionElement.textContent = personalInfo.summary;
+    
+    // Update contact details in about section
+    const contactDetails = document.querySelector('.contact-details');
+    if (contactDetails) {
+        contactDetails.innerHTML = `
+            <p><i class="fas fa-envelope"></i> ${personalInfo.email.join(' | ')}</p>
+            <p><i class="fas fa-phone"></i> ${personalInfo.phone}</p>
+            <p><i class="fab fa-linkedin"></i> ${personalInfo.linkedin.replace('https://', '')}</p>
+        `;
+    }
+    
+    // Update about intro
+    const aboutIntro = document.querySelector('.about-intro h3');
+    const aboutTitle = document.querySelector('.about-intro h4');
+    const aboutDescription = document.querySelector('.about-intro p');
+    
+    if (aboutIntro) aboutIntro.textContent = personalInfo.name;
+    if (aboutTitle) aboutTitle.textContent = personalInfo.title;
+    if (aboutDescription) aboutDescription.textContent = personalInfo.summary;
+}
+
+function updateExperienceSection(experience) {
+    const timelineContainer = document.querySelector('.experience-timeline');
+    if (!timelineContainer || !experience.length) return;
+    
+    timelineContainer.innerHTML = '';
+    
+    experience.forEach(exp => {
+        const timelineItem = document.createElement('div');
+        timelineItem.className = 'timeline-item';
+        
+        const achievementsList = exp.achievements.map(achievement => 
+            `<li>${achievement}</li>`
+        ).join('');
+        
+        timelineItem.innerHTML = `
+            <div class="timeline-date">${exp.period}</div>
+            <div class="timeline-content">
+                <h3>${exp.title}</h3>
+                <h4>${exp.company}</h4>
+                <div class="role-description">
+                    <p>${exp.description}</p>
+                    <ul class="achievements">
+                        ${achievementsList}
+                    </ul>
+                </div>
+            </div>
+        `;
+        
+        timelineContainer.appendChild(timelineItem);
+    });
+}
+
+function updateProjectsSection(projects) {
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (!projectsGrid || !projects.length) return;
+    
+    projectsGrid.innerHTML = '';
+    
+    projects.forEach((project, index) => {
+        const projectCard = document.createElement('div');
+        projectCard.className = 'project-card';
+        
+        const techTags = project.technologies.map(tech => 
+            `<span class="tech-tag">${tech}</span>`
+        ).join('');
+        
+        projectCard.innerHTML = `
+            <div class="project-header">
+                <i class="fas fa-${index === 0 ? 'cloud' : 'database'}"></i>
+                <h3>${project.title}</h3>
+                <span class="project-year">2020-2024</span>
+            </div>
+            <div class="project-content">
+                <p>${project.description}</p>
+                <div class="project-tech">
+                    ${techTags}
+                </div>
+            </div>
+        `;
+        
+        projectsGrid.appendChild(projectCard);
+    });
+}
+
+function updateAboutSection(data) {
+    // Update professional summary
+    const professionalSummary = document.querySelector('.professional-summary p');
+    if (professionalSummary) {
+        professionalSummary.textContent = data.personalInfo.summary;
+    }
+    
+    // Update expertise areas with skills from resume data
+    const expertiseGrid = document.querySelector('.expertise-grid');
+    if (expertiseGrid && data.skills) {
+        expertiseGrid.innerHTML = `
+            <div class="expertise-item">
+                <i class="fas fa-database"></i>
+                <h5>Oracle Database Administration</h5>
+                <p>Expert in ${data.skills.databases.join(', ')}</p>
+            </div>
+            <div class="expertise-item">
+                <i class="fas fa-cloud"></i>
+                <h5>Multi-Cloud Architecture</h5>
+                <p>Specialized in ${data.skills.cloud.join(', ')}</p>
+            </div>
+            <div class="expertise-item">
+                <i class="fas fa-shield-alt"></i>
+                <h5>Security & Compliance</h5>
+                <p>Security Program Manager with expertise in risk compliance and security teams</p>
+            </div>
+            <div class="expertise-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <h5>Performance & Migration</h5>
+                <p>${data.skills.specialties.join(', ')}</p>
+            </div>
+        `;
+    }
+}
+
+function updateStats(stats) {
+    const statsGrid = document.querySelector('.stats-grid');
+    if (!statsGrid || !stats) return;
+    
+    statsGrid.innerHTML = `
+        <div class="stat-item">
+            <span class="stat-number">${stats.experience.replace(' Years', '+')}</span>
+            <span class="stat-label">Years Experience</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">${stats.migrations.replace(' Customer Migrations', '+')}</span>
+            <span class="stat-label">Customer Migrations</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">${stats.customers.replace(' Customers Supported', '+')}</span>
+            <span class="stat-label">Customers Supported</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">${stats.uptime.replace(' Uptime Achieved', '')}</span>
+            <span class="stat-label">Uptime Achieved</span>
+        </div>
+    `;
+}
+
+// Load resume data when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadResumeData();
+});
+
 console.log('🚀 Interactive Portfolio Loaded Successfully!');

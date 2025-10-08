@@ -24,7 +24,7 @@ def extract_pdf_text(pdf_path):
 
 
 if __name__ == "__main__":
-    pdf_file = ("SurenderGyanmote-Database_System_CloudArchitect-"
-                "1page-Akamai.pdf")
+    pdf_file = ("SurenderGyanmote_SecurityProgramManager_and_"
+                "CloudSolutions_Architect-3pages.pdf")
     extracted_text = extract_pdf_text(pdf_file)
     print(extracted_text)

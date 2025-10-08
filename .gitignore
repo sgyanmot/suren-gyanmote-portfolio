@@ -41,3 +41,4 @@ build/
 # Personal documents (keeping PDFs and Pages files out of repo)
 *.pdf
 *.pages
+.vercel
