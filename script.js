@@ -1131,9 +1131,16 @@ function updateProjectsSection(projects) {
 
 function updateAboutSection(data) {
     // Update professional summary
-    const professionalSummary = document.querySelector('.professional-summary p');
-    if (professionalSummary) {
-        professionalSummary.textContent = data.personalInfo.summary;
+    const professionalSummaryElement = document.querySelector('.professional-summary');
+    if (professionalSummaryElement && data.professionalSummary) {
+        // Clear existing content and add the new professional summary
+        const existingParagraphs = professionalSummaryElement.querySelectorAll('p');
+        existingParagraphs.forEach(p => p.remove());
+        
+        // Add the professional summary content
+        const summaryParagraph = document.createElement('p');
+        summaryParagraph.textContent = data.professionalSummary;
+        professionalSummaryElement.appendChild(summaryParagraph);
     }
     
     // Update expertise areas with skills from resume data
