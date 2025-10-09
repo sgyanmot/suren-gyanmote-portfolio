@@ -349,8 +349,8 @@ document.addEventListener('DOMContentLoaded', function() {
         soundToggle.title = 'Toggle Sound Effects';
         soundToggle.style.cssText = `
             position: fixed;
-            top: 20px;
-            right: 20px;
+            bottom: 20px;
+            left: 20px;
             z-index: 1000;
             background: rgba(255, 255, 255, 0.9);
             border: 2px solid #333;
@@ -361,6 +361,8 @@ document.addEventListener('DOMContentLoaded', function() {
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         `;
 
         soundToggle.addEventListener('click', () => {
