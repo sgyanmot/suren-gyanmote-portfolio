@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "alias": ["suregyanmote.vercel.app"],
+  "alias": ["surengyanmote.vercel.app"],
   "headers": [
     {
       "source": "/(.*)",
