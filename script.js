@@ -1317,15 +1317,22 @@ function updateProjectsSection(projects) {
 function updateAboutSection(data) {
     // Update professional summary
     const professionalSummaryElement = document.querySelector('.professional-summary');
-    if (professionalSummaryElement && data.professionalSummary) {
-        // Clear existing content and add the new professional summary
-        const existingParagraphs = professionalSummaryElement.querySelectorAll('p');
-        existingParagraphs.forEach(p => p.remove());
-        
-        // Add the professional summary content
-        const summaryParagraph = document.createElement('p');
-        summaryParagraph.textContent = data.professionalSummary;
-        professionalSummaryElement.appendChild(summaryParagraph);
+    if (professionalSummaryElement) {
+        // Choose best available summary text
+        const summaryText = (
+            data.professionalSummary ||
+            (data.personalInfo && data.personalInfo.summary) ||
+            data.summary ||
+            ''
+        );
+        if (summaryText) {
+            // Clear existing content only when we have a new summary to render
+            const existingParagraphs = professionalSummaryElement.querySelectorAll('p');
+            existingParagraphs.forEach(p => p.remove());
+            const summaryParagraph = document.createElement('p');
+            summaryParagraph.textContent = summaryText;
+            professionalSummaryElement.appendChild(summaryParagraph);
+        }
     }
     
     // Update expertise areas with skills from resume data
@@ -1348,19 +1355,19 @@ function updateAboutSection(data) {
                 <p>Specialized in ${cloudList.join(', ')}</p>
             </div>
             <div class="expertise-item">
-                <i class="fas fa-brain"></i>
-                <h5>AI & GenAI</h5>
-                <p>Building with ${aiList.join(', ')}</p>
-            </div>
-            <div class="expertise-item">
                 <i class="fas fa-shield-alt"></i>
                 <h5>Security & Compliance</h5>
-                <p>${securityList.join(', ')}</p>
+                <p>Focused on ${securityList.join(', ')}</p>
             </div>
             <div class="expertise-item">
-                <i class="fas fa-tachometer-alt"></i>
-                <h5>Performance & Migration</h5>
-                <p>${specialtiesList.join(', ')}</p>
+                <i class="fas fa-brain"></i>
+                <h5>AI & Automation</h5>
+                <p>Applied AI: ${aiList.join(', ')}</p>
+            </div>
+            <div class="expertise-item">
+                <i class="fas fa-cogs"></i>
+                <h5>Specialties</h5>
+                <p>Specialized in ${specialtiesList.join(', ')}</p>
             </div>
         `;
     }
