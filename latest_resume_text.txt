@@ -1,6 +1,6 @@
 		
 Surender	Gyanmote	 	
-Phone:	(510)	304-0672   ¨	Email:	sgyanmot@yahoo.com,	sgyanmot@gmail.com		
+Phone:	xxx-xxx-xxxx   ¨	Email:	sgyanmot@yahoo.com,	sgyanmot@gmail.com		
 LinkedIn:	https://www.linkedin.com/in/gyanmotesurender			
 		
 Cloud	Solutions	Architect|Database	Architect|Gen	AI	Architect	|Program	Manager|
@@ -124,4 +124,4 @@ EDUCATION	AND	ACHIEVEMENTS
 ❖ OCI	-	Oracle	Cloud	Infrastructure	Architect	Professional	2019,	2020,	2021and	2024.	
 ❖ Oracle	Cloud	Infrastructure	2024	AI	Foundations	Associate	(1Z0-1122-24)	
 ➢ AWS	Certi[ied	Solutions	Architect	–	Associate		
-➢ Microsoft	Azure	Fundamentals	-	AZ-900	
+➢ Microsoft	Azure	Fundamentals	-	AZ-900
