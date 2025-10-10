@@ -7,19 +7,19 @@ import re
 from typing import List, Dict, Any
 
 try:
-    from pypdf import PdfReader
+    import pypdf
 except Exception:
-    PdfReader = None
+    pypdf = None
 
 
 def extract_pdf_text(pdf_path: str) -> str:
     """
     Extract text from a PDF file using pypdf
     """
-    if PdfReader is None:
+    if pypdf is None:
         return "pypdf not available"
     try:
-        reader = PdfReader(pdf_path)
+        reader = pypdf.PdfReader(pdf_path)
         text = ""
         for page in reader.pages:
             page_text = page.extract_text() or ""
@@ -45,10 +45,25 @@ def parse_emails(s: str) -> List[str]:
 
 
 def parse_resume_text_to_data(text: str, existing: Dict[str, Any]) -> Dict[str, Any]:
-    """Parse latest_resume_text.txt to update fields in existing resume-data.json structure."""
+    """Parse latest_resume_text.txt to update fields in existing resume-data.json
+    structure.
+    """
     data = json.loads(json.dumps(existing))  # deep copy via json
 
     norm = normalize_text(text)
+
+    # Constants and patterns (split to keep lines short)
+    title_text = (
+        "Security Program Manager|Cloud Solutions, Database, Gen AI Architect"
+    )
+    title_pattern = (
+        r"Security\s*Program\s*Manager\|Cloud\s*Solutions,\s*Database,"
+        r"\s*Gen\s*AI\s*Architect"
+    )
+    degree_pattern = (
+        r"Master[’'`s]*\s*degree\s*in\s*computer\s*science\s*-\s*(.*?),"
+        r"\s*(.*?)\."
+    )
 
     # Personal Info
     # Name
@@ -62,7 +77,12 @@ def parse_resume_text_to_data(text: str, existing: Dict[str, Any]) -> Dict[str, 
         phone = phone_match.group(1).strip()
         # Normalize X casing
         phone = phone.replace("x", "X")
-        data["personalInfo"]["phone"] = phone if phone.startswith("+") else f"+1-{phone}" if re.search(r"\d", phone) else phone
+        if phone.startswith("+"):
+            data["personalInfo"]["phone"] = phone
+        elif re.search(r"\d", phone):
+            data["personalInfo"]["phone"] = f"+1-{phone}"
+        else:
+            data["personalInfo"]["phone"] = phone
 
     # Email
     email_match = re.search(r"Email:\s*([^\n]+)", norm)
@@ -77,15 +97,19 @@ def parse_resume_text_to_data(text: str, existing: Dict[str, Any]) -> Dict[str, 
         data["personalInfo"]["linkedin"] = li_match.group(1)
 
     # Title
-    title_match = re.search(r"Security\s*Program\s*Manager\|Cloud\s*Solutions,\s*Database,\s*Gen\s*AI\s*Architect", norm, re.IGNORECASE)
+    title_match = re.search(title_pattern, norm, re.IGNORECASE)
     if title_match:
-        data["personalInfo"]["title"] = "Security Program Manager | Cloud Solutions, Database, Gen AI Architect"
+        data["personalInfo"]["title"] = (
+            "Security Program Manager | Cloud Solutions, Database, Gen AI "
+            "Architect"
+        )
 
-    # Summary: capture text between title and first bullet (✓) or PROFESSIONAL EXPERIENCE
+    # Summary: capture text between title and first bullet (✓) or
+    # PROFESSIONAL EXPERIENCE
     summary = None
-    title_idx = norm.lower().find("security program manager|cloud solutions, database, gen ai architect".lower())
+    title_idx = norm.lower().find(title_text.lower())
     if title_idx != -1:
-        tail = norm[title_idx + len("Security Program Manager|Cloud Solutions, Database, Gen AI Architect"):]
+        tail = norm[title_idx + len(title_text) :]
         end_pos = len(tail)
         bullet_pos = tail.find("✓")
         exp_pos = tail.lower().find("professional experience")
@@ -101,12 +125,20 @@ def parse_resume_text_to_data(text: str, existing: Dict[str, Any]) -> Dict[str, 
         data["professionalSummary"] = summary
 
     # Experience: locate section and parse first role line
-    exp_section_match = re.search(r"professional\s+experience\s+(.*?)\s+projects", norm, re.IGNORECASE)
+    exp_section_match = re.search(
+        r"professional\s+experience\s+(.*?)\s+projects",
+        norm,
+        re.IGNORECASE,
+    )
     achievements: List[str] = []
     if exp_section_match:
         exp_section = exp_section_match.group(1).strip()
         # Role line with company, title, and period
-        role_line_match = re.search(r"(Oracle\s+Corp)\s*[-–]\s*(.*?)\s+(Sep\s*\d{4}\s*[-–]\s*\w+\s*\d{4})", exp_section, re.IGNORECASE)
+        role_line_match = re.search(
+            r"(Oracle\s+Corp)\s*[-–]\s*(.*?)\s+(Sep\s*\d{4}\s*[-–]\s*\w+\s*\d{4})",
+            exp_section,
+            re.IGNORECASE,
+        )
         if role_line_match:
             company = role_line_match.group(1).strip()
             title = role_line_match.group(2).strip()
@@ -116,13 +148,15 @@ def parse_resume_text_to_data(text: str, existing: Dict[str, Any]) -> Dict[str, 
                 data["experience"][0]["title"] = title
                 data["experience"][0]["period"] = period
             else:
-                data["experience"] = [{
-                    "company": company,
-                    "title": title,
-                    "period": period,
-                    "description": "",
-                    "achievements": []
-                }]
+                data["experience"] = [
+                    {
+                        "company": company,
+                        "title": title,
+                        "period": period,
+                        "description": "",
+                        "achievements": [],
+                    }
+                ]
         # Achievements: bullets starting with \u2022, '•', or '▪'
         for m in re.finditer(r"[•▪]\s*([^•▪]+?)(?=\s*[•▪]|$)", exp_section):
             ach = m.group(1).strip()
@@ -136,25 +170,37 @@ def parse_resume_text_to_data(text: str, existing: Dict[str, Any]) -> Dict[str, 
                 data["experience"][0]["achievements"] = achievements
 
     # Education and Achievements section
-    edu_section_match = re.search(r"education\s+and\s+achievements\s+(.*)$", norm, re.IGNORECASE)
+    edu_section_match = re.search(
+        r"education\s+and\s+achievements\s+(.*)$",
+        norm,
+        re.IGNORECASE,
+    )
     if edu_section_match:
         edu = edu_section_match.group(1)
         # Degree
-        degree_match = re.search(r"Master[’'`s]*\s*degree\s*in\s*computer\s*science\s*-\s*(.*?)\,\s*(.*?)\.", edu, re.IGNORECASE)
+        degree_match = re.search(degree_pattern, edu, re.IGNORECASE)
         if degree_match:
             institution = degree_match.group(1).strip()
             location = degree_match.group(2).strip()
-            data["education"] = [{
-                "degree": "Master's degree in Computer Science",
-                "institution": institution,
-                "location": location
-            }]
+            data["education"] = [
+                {
+                    "degree": "Master's degree in Computer Science",
+                    "institution": institution,
+                    "location": location,
+                }
+            ]
         # Awards: lines starting with '➢'
-        awards = [m.group(1).strip() for m in re.finditer(r"\u27a2\s*([^\n]+)", edu)]  # \u27a2 is '➢'
+        awards = [
+            m.group(1).strip()
+            for m in re.finditer(r"\u27a2\s*([^\n]+)", edu)
+        ]
         if awards:
             data["awards"] = awards
         # Certifications: lines starting with '❖'
-        certs = [m.group(1).strip() for m in re.finditer(r"\u2756\s*([^\n]+)", edu)]  # \u2756 is '❖'
+        certs = [
+            m.group(1).strip()
+            for m in re.finditer(r"\u2756\s*([^\n]+)", edu)
+        ]
         if certs:
             data["certifications"] = certs
 
@@ -173,10 +219,29 @@ def save_json(path: str, obj: Dict[str, Any]):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Synchronize resume-data.json from PDF or extracted text")
-    parser.add_argument("--pdf", dest="pdf", help="Path to the PDF to parse", default=None)
-    parser.add_argument("--text", dest="text", help="Path to extracted text file", default="latest_resume_text.txt")
-    parser.add_argument("--json", dest="json_path", help="Path to resume-data.json to update", default="resume-data.json")
+    parser = argparse.ArgumentParser(
+        description=(
+            "Synchronize resume-data.json from PDF or extracted text"
+        )
+    )
+    parser.add_argument(
+        "--pdf",
+        dest="pdf",
+        help="Path to the PDF to parse",
+        default=None,
+    )
+    parser.add_argument(
+        "--text",
+        dest="text",
+        help="Path to extracted text file",
+        default="latest_resume_text.txt",
+    )
+    parser.add_argument(
+        "--json",
+        dest="json_path",
+        help="Path to resume-data.json to update",
+        default="resume-data.json",
+    )
     args = parser.parse_args()
 
     # Load existing JSON
@@ -197,12 +262,21 @@ def main():
 
     updated = parse_resume_text_to_data(source_text, existing)
     save_json(args.json_path, updated)
-    print(f"Updated {args.json_path} from {'PDF' if args.pdf and os.path.exists(args.pdf) else 'text'} source. Fields updated:")
-    print(json.dumps({
-        'personalInfo': updated.get('personalInfo', {}),
-        'experience_head': updated.get('experience', [{}])[0].get('title', ''),
-        'experience_period': updated.get('experience', [{}])[0].get('period', ''),
-    }, indent=2, ensure_ascii=False))
+
+    source_kind = "PDF" if args.pdf and os.path.exists(args.pdf) else "text"
+    msg = (
+        f"Updated {args.json_path} from {source_kind} source. "
+        "Fields updated:"
+    )
+    print(msg)
+    summary_info = {
+        "personalInfo": updated.get("personalInfo", {}),
+        "experience_head": updated.get("experience", [{}])[0].get("title", ""),
+        "experience_period": updated.get("experience", [{}])[0].get(
+            "period", ""
+        ),
+    }
+    print(json.dumps(summary_info, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":
