@@ -98,6 +98,7 @@ def parse_resume_text_to_data(text: str, existing: Dict[str, Any]) -> Dict[str, 
         summary = re.sub(r"\s+", " ", summary_block)
     if summary:
         data["personalInfo"]["summary"] = summary
+        data["professionalSummary"] = summary
 
     # Experience: locate section and parse first role line
     exp_section_match = re.search(r"professional\s+experience\s+(.*?)\s+projects", norm, re.IGNORECASE)
