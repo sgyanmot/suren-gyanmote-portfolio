@@ -62,26 +62,23 @@ class SoundSystem {
             warmthFilter.connect(gainNode);
             gainNode.connect(this.audioContext.destination);
             
-            // Warmer sine wave with slight triangle wave blend for mellowness
+            // Watch-like crisp tick
             oscillator.frequency.setValueAtTime(config.freq, currentTime);
-            oscillator.type = 'sine';
+            oscillator.type = 'square';
             
-            // Primary low-pass filter for softness
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(config.freq * 1.5, currentTime); // Lower cutoff for mellowness
-            filter.Q.setValueAtTime(0.7, currentTime); // Gentle resonance for warmth
+            // High-pass followed by band-pass for sharp tick character
+            filter.type = 'highpass';
+            filter.frequency.setValueAtTime(3000, currentTime);
+            filter.Q.setValueAtTime(2.0, currentTime);
             
-            // Secondary warmth filter to reduce any remaining harshness
-            warmthFilter.type = 'lowpass';
-            warmthFilter.frequency.setValueAtTime(config.freq * 2.5, currentTime);
-            warmthFilter.Q.setValueAtTime(0.3, currentTime); // Very gentle
+            warmthFilter.type = 'bandpass';
+            warmthFilter.frequency.setValueAtTime(3500, currentTime);
+            warmthFilter.Q.setValueAtTime(6.0, currentTime);
             
-            // Much smoother envelope with gradual attack and extended release
+            // Percussive envelope
             gainNode.gain.setValueAtTime(0, currentTime);
-            gainNode.gain.linearRampToValueAtTime(this.volume * config.volume * 0.3, currentTime + 0.008); // Slower attack
-            gainNode.gain.linearRampToValueAtTime(this.volume * config.volume, currentTime + 0.015); // Peak
-            gainNode.gain.exponentialRampToValueAtTime(this.volume * config.volume * 0.6, currentTime + config.duration * 0.4); // Sustain
-            gainNode.gain.exponentialRampToValueAtTime(0.001, currentTime + config.duration); // Gentle release
+            gainNode.gain.linearRampToValueAtTime(this.volume * config.volume, currentTime + 0.001);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, currentTime + config.duration);
             
             oscillator.start(currentTime);
             oscillator.stop(currentTime + config.duration);
@@ -103,9 +100,6 @@ class SoundSystem {
             subFilter.Q.setValueAtTime(0.5, currentTime);
             
             subGain.gain.setValueAtTime(0, currentTime);
-            subGain.gain.linearRampToValueAtTime(this.volume * config.volume * 0.2, currentTime + 0.012);
-            subGain.gain.exponentialRampToValueAtTime(0.001, currentTime + config.duration * 0.8);
-            
             subHarmonic.start(currentTime + 0.003);
             subHarmonic.stop(currentTime + config.duration);
             
@@ -127,8 +121,9 @@ class SoundSystem {
             
             const harmonicVolume = type === 'success' || type === 'button' ? 0.25 : 0.15;
             harmonicGain.gain.setValueAtTime(0, currentTime);
-            harmonicGain.gain.linearRampToValueAtTime(this.volume * config.volume * harmonicVolume, currentTime + 0.015);
-            harmonicGain.gain.exponentialRampToValueAtTime(0.001, currentTime + config.duration * 0.6);
+            // Disable harmonic layer for clean tick
+            harmonicGain.gain.linearRampToValueAtTime(0, currentTime + 0.015);
+            harmonicGain.gain.exponentialRampToValueAtTime(0.0001, currentTime + config.duration * 0.6);
             
             harmonic.start(currentTime + 0.008);
             harmonic.stop(currentTime + config.duration);
@@ -408,51 +403,48 @@ document.addEventListener('DOMContentLoaded', function() {
         themeToggle.className = 'theme-toggle';
         themeToggle.title = 'Toggle Daylight/Night Mode';
         themeToggle.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #333;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        `;
-
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 2000;
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid #333;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(10px);
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            `;
+        
+        // Use ThemeManager's state to reflect the icon
         const applyThemeFromStorage = () => {
-            const saved = localStorage.getItem('theme');
-            const isDark = saved === 'dark';
-            document.body.classList.toggle('dark-mode', isDark);
+            const current = themeManager.getCurrentTheme();
+            const isDark = current === 'dark';
             themeToggle.innerHTML = isDark ? '☀️' : '🌙';
             themeToggle.title = isDark ? 'Switch to Daylight Mode' : 'Switch to Night Mode';
         };
-
+        
         applyThemeFromStorage();
-
+        
         themeToggle.addEventListener('click', () => {
-            const isDark = !document.body.classList.contains('dark-mode');
-            document.body.classList.toggle('dark-mode', isDark);
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            themeToggle.innerHTML = isDark ? '☀️' : '🌙';
-            themeToggle.title = isDark ? 'Switch to Daylight Mode' : 'Switch to Night Mode';
+            themeManager.toggleTheme();
+            applyThemeFromStorage();
         });
-
+        
         themeToggle.addEventListener('mouseenter', () => {
             themeToggle.style.transform = 'scale(1.1)';
             themeToggle.style.background = 'rgba(255, 255, 255, 1)';
         });
-
+        
         themeToggle.addEventListener('mouseleave', () => {
             themeToggle.style.transform = 'scale(1)';
             themeToggle.style.background = 'rgba(255, 255, 255, 0.9)';
         });
-
+        
         document.body.appendChild(themeToggle);
     }
 
