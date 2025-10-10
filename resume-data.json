@@ -1,167 +1,79 @@
 {
   "personalInfo": {
-    "name": "Surender Gyanmote",
-    "title": "Security Program Manager | Cloud Solutions, Database, Gen AI Architect",
-    "phone": "+1-(510) 304-0672",
-    "email": [
-      "sgyanmot@yahoo.com",
-      "sgyanmot@gmail.com LinkedIn: https://www.linkedin.com/in/gyanmotesurender Cloud Solutions Architect",
-      "technical project lead for migrations of 200+ customer environments to new generation platform in @oracle services. As Cloud@Customer Infra team member and Solutions Architect",
-      "EXACS and EXACC (Cloud@customer) database migrations and tenancy administration including network",
-      "and on-prem and OCI migrations PROJECTS Generative AI and AI Agentic Solutions Architect ▪ Architected and built multiple AI agentic POCs ▪ Built multiple AI Agentic POCs and solutions using multi-LLM models Managed Cloud Services @Customer Infra ▪ Oracle Cloud Migrations from Engineered Systems Involved in multiple global customers planning"
-    ],
-    "linkedin": "https://www.linkedin.com/in/gyanmotesurender",
-    "summary": "2+ decades of Oracle Database design, development, database, System Administration, Performance and Capacity, Database Architecture, Cloud Solutions Architecture, Oracle Engineered Systems Administration, Security advisor and Lead Program manager for application and tools security in Managed Cloud to support Risk Compliance and security teams, combined with 5+ years of Database architecture, design, development, and administration. Expert in hybrid database solutions integrating oracle RDBMS database for multiple customers. And, technical project lead for migrations of 200+ customer environments to new generation platform in @oracle services. As Cloud@Customer Infra team member and Solutions Architect, worked on multiple migrations, cutovers and go-live of critical Production Systems for Managed Cloud Customers successfully. Key lead in Disaster Recovery Services like Discovery, assessment, and implementation of it including FSDR (Full stack Disaster Recovery) for OIC Gen3. As a lead, worked very closely with teams across the global regions to support Managed Cloud customers. CertiZied OCI 2024,2021,2020,2019 Architect Professional, AWS 2021 - CertiZied Solutions Architect Associate, certiZied on Microsoft Azure Fundamentals, and Oracle Cloud Infrastructure 2024 AI Foundations Associate (1Z0-1122-24). Multiple years of certiZications on HIPPA, GDPR, Secured application development, secured coding, and customer data privacy with internal trainings in oracle corporation."
+    "name": "",
+    "title": "",
+    "location": "",
+    "email": "sgyanmot@yahoo.com",
+    "phone": "",
+    "linkedin": "",
+    "github": ""
   },
-  "experience": [
-    {
-      "period": "Sep 1998 - Jan 2025",
-      "title": "Oracle DBA,System, Database & Cloud Solutions Architect",
-      "company": "Oracle Corp",
-      "description": "Led planning, migrations, cutovers, and go-lives of cloud managed customers into Engineered Systems. Provided OCI Tenancy Administration, Database/System administration, on-prem & OCI migrations, and supported Tier1 customers as SME during escalations/outages.",
-      "achievements": [
-        "20+ years of managing Linux and Solaris platforms, Oracle Database administration, EXADATA Systems, Oracle Cloud Infrastructure tenancies for enterprise ERP customers",
-        "Led Exadata environments and supporting Tier1 customers as SME for escalations and outages.",
-        "As Technical Lead and Project Manager led planning, migrations, cutovers, and go-lives of cloud managed customers into Engineered Systems",
-        "Led the effort to implement oracle best practices, and production ready for implementation customers",
-        "As a Performance Engineer supported 150+ customers on Oracle technologies - databases, and E- business Suite",
-        "Led sizing and capacity"
-      ]
-    }
-  ],
-  "projects": [
-    {
-      "title": "Generative AI and AI Agentic Solutions Architect",
-      "description": "Architected and built multiple AI agentic POCs and solutions using multi-LLM models with GitHub integrations",
-      "technologies": [
-        "Multi-LLM Models",
-        "AI Agentic Solutions",
-        "GitHub Integration",
-        "Generative AI",
-        "POC Development"
-      ]
-    },
-    {
-      "title": "Managed Cloud Services @Customer Infra",
-      "description": "Oracle Cloud Migrations from Engineered Systems involving multiple global customers planning, migration, cutovers, and go-lives successfully onto Oracle Cloud DBAAS, EXACS, Object Storage, and Block Storage",
-      "technologies": [
-        "Oracle Cloud",
-        "DBAAS",
-        "EXACS",
-        "Object Storage",
-        "Block Storage",
-        "Migration Planning"
-      ]
-    },
-    {
-      "title": "Application/Tools Security Program Manager",
-      "description": "Led application and tools development teams in designing and delivering secure internal and external solutions following Secure SDLC practices, OWASP top ten as a standard, and SANS top 25 for best coding standards",
-      "technologies": [
-        "Secure SDLC",
-        "OWASP",
-        "SANS",
-        "DevSecOps",
-        "Security Architecture",
-        "Risk Compliance"
-      ]
-    },
-    {
-      "title": "Oracle Linux, Solaris, and Database, and OCI Database Cloud Services",
-      "description": "Designed hybrid solutions for multiple enterprise clients combining Oracle Linux, Solaris, and Oracle databases for transactional workloads",
-      "technologies": [
-        "Oracle Linux",
-        "Solaris",
-        "Oracle Database",
-        "OCI DBCS",
-        "Hybrid Solutions",
-        "Enterprise Architecture"
-      ]
-    }
-  ],
-  "education": [
-    {
-      "degree": "Master's degree in Computer Science",
-      "institution": "Osmania University",
-      "location": "Hyderabad, INDIA"
-    }
-  ],
-  "certifications": [
-    "OCI - Oracle Autonomous Database Cloud 2019 Specialist (1Z0-931) ❖ OCI - Oracle Cloud Infrastructure 2019 Architect Associate (1Z0-1072-19), 2020 and 2021. ❖ OCI - Oracle Cloud Infrastructure Architect Professional 2019, 2020, 2021and 2024. ❖ Oracle Cloud Infrastructure 2024 AI Foundations Associate (1Z0-1122-24) ➢ AWS Certi[ied Solutions Architect - Associate ➢ Microsoft Azure Fundamentals - AZ-900"
-  ],
-  "awards": [
-    "Master’s degree in computer science - Osmania University, Hyderabad, INDIA. ➢ In Oracle Corp, Excellence Award for Cloud Ops and many Customer Services Pacesetter Awards ➢ Oracle Cloud Certi[icates ❖ OCI - Oracle Autonomous Database Cloud 2019 Specialist (1Z0-931) ❖ OCI - Oracle Cloud Infrastructure 2019 Architect Associate (1Z0-1072-19), 2020 and 2021. ❖ OCI - Oracle Cloud Infrastructure Architect Professional 2019, 2020, 2021and 2024. ❖ Oracle Cloud Infrastructure 2024 AI Foundations Associate (1Z0-1122-24) ➢ AWS Certi[ied Solutions Architect - Associate ➢ Microsoft Azure Fundamentals - AZ-900"
-  ],
+  "summary": "",
+  "experience": [],
+  "projects": [],
   "skills": {
-    "databases": [
-      "Oracle Database",
-      "Oracle SQL",
-      "PL/SQL",
-      "Exadata",
-      "Oracle RDBMS"
-    ],
     "cloud": [
-      "Oracle Cloud Infrastructure (OCI)",
       "AWS",
+      "Block Storage",
+      "DBAAS",
+      "EXACS",
       "Microsoft Azure",
-      "OCI AI Infrastructure",
-      "OCI DR/FSDR"
+      "OCI DR/FSDR",
+      "Object Storage",
+      "Oracle Cloud",
+      "Oracle Cloud Infrastructure (OCI)"
     ],
     "ai_genai": [
-      "Generative AI",
       "AI Agentic Solutions",
-      "Multi-LLM Models",
       "AI Infrastructure",
-      "GitHub AI Integrations"
+      "Generative AI",
+      "GitHub AI Integrations",
+      "Multi-LLM Models"
     ],
     "security": [
-      "HIPAA",
-      "GDPR",
-      "Secured Coding",
       "DevSecOps",
+      "GDPR",
+      "HIPAA",
       "OWASP",
+      "Risk Compliance",
       "SANS",
-      "Security Architecture",
-      "Risk Compliance"
+      "Secured Coding",
+      "Security Architecture"
     ],
     "systems": [
+      "Exalogic",
       "Linux",
+      "Mac",
       "Solaris",
       "Unix",
-      "Windows",
-      "Mac",
-      "Exalogic"
+      "Windows"
     ],
     "programming": [
-      "Shell Scripting",
-      "Python",
+      "Oracle Forms",
       "Perl",
       "Pro*C",
-      "Oracle Forms"
+      "Python",
+      "Shell Scripting"
     ],
     "infrastructure": [
-      "Terraform",
       "Ansible",
       "Infrastructure Automation",
       "Network Architecture",
+      "Terraform",
       "VCN",
-      "VPN",
-      "Firewall"
+      "VPN"
     ],
     "specialties": [
-      "Performance Tuning",
       "Capacity Planning",
       "Database Migration",
       "Disaster Recovery",
+      "Performance Tuning",
       "System Administration",
       "Technical Project Management"
     ]
   },
-  "stats": {
-    "experience": "26+ Years",
-    "migrations": "200+ Customer Migrations",
-    "customers": "150+ Customers Supported",
-    "partners": "100+ Oracle Partners Supported",
-    "uptime": "99.9% Uptime Achieved"
-  },
-  "professionalSummary": "2+ decades of Oracle Database design, development, database, System Administration, Performance and Capacity, Database Architecture, Cloud Solutions Architecture, Oracle Engineered Systems Administration, Security advisor and Lead Program manager for application and tools security in Managed Cloud to support Risk Compliance and security teams, combined with 5+ years of Database architecture, design, development, and administration. Expert in hybrid database solutions integrating oracle RDBMS database for multiple customers. And, technical project lead for migrations of 200+ customer environments to new generation platform in @oracle services. As Cloud@Customer Infra team member and Solutions Architect, worked on multiple migrations, cutovers and go-live of critical Production Systems for Managed Cloud Customers successfully. Key lead in Disaster Recovery Services like Discovery, assessment, and implementation of it including FSDR (Full stack Disaster Recovery) for OIC Gen3. As a lead, worked very closely with teams across the global regions to support Managed Cloud customers. CertiZied OCI 2024,2021,2020,2019 Architect Professional, AWS 2021 - CertiZied Solutions Architect Associate, certiZied on Microsoft Azure Fundamentals, and Oracle Cloud Infrastructure 2024 AI Foundations Associate (1Z0-1122-24). Multiple years of certiZications on HIPPA, GDPR, Secured application development, secured coding, and customer data privacy with internal trainings in oracle corporation."
+  "education": [],
+  "certifications": [],
+  "awards": [],
+  "stats": {}
 }

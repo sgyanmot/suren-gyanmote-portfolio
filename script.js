@@ -629,16 +629,13 @@ function showHeroSection() {
 }
 
 // Function to open sections from buttons
-function openSection(sectionId) {
-    showSection(sectionId);
-}
-
-// Add click effect to elements
 function addClickEffect(element) {
-    element.style.transform = element.style.transform + ' scale(0.95)';
+    const currentTransform = element.style.transform || '';
+    element.style.transform = currentTransform + ' scale(0.95)';
     
     setTimeout(() => {
-        element.style.transform = element.style.transform.replace(' scale(0.95)', '');
+        const latestTransform = element.style.transform || '';
+        element.style.transform = latestTransform.replace(' scale(0.95)', '');
     }, 150);
 }
 
@@ -1227,11 +1224,17 @@ function updatePersonalInfo(personalInfo) {
     
     // Update contact details in about section
     const contactDetails = document.querySelector('.contact-details');
+    const emailDisplay = Array.isArray(personalInfo.email)
+        ? personalInfo.email.join(' | ')
+        : (personalInfo.email || '');
+    const safePhone = personalInfo.phone || '';
+    const safeLinkedIn = personalInfo.linkedin || '';
+    const safeLinkedInDisplay = typeof safeLinkedIn === 'string' ? safeLinkedIn.replace('https://', '') : '';
     if (contactDetails) {
         contactDetails.innerHTML = `
-            <p><i class="fas fa-envelope"></i> ${personalInfo.email.join(' | ')}</p>
-            <p><i class="fas fa-phone"></i> ${personalInfo.phone}</p>
-            <p><i class="fab fa-linkedin"></i> ${personalInfo.linkedin.replace('https://', '')}</p>
+            <p><i class="fas fa-envelope"></i> ${emailDisplay}</p>
+            <p><i class="fas fa-phone"></i> ${safePhone}</p>
+            <p><i class="fab fa-linkedin"></i> ${safeLinkedInDisplay}</p>
         `;
     }
     
@@ -1247,7 +1250,7 @@ function updatePersonalInfo(personalInfo) {
 
 function updateExperienceSection(experience) {
     const timelineContainer = document.querySelector('.experience-timeline');
-    if (!timelineContainer || !experience.length) return;
+    if (!timelineContainer || !Array.isArray(experience) || experience.length === 0) return;
     
     timelineContainer.innerHTML = '';
     
@@ -1255,7 +1258,8 @@ function updateExperienceSection(experience) {
         const timelineItem = document.createElement('div');
         timelineItem.className = 'timeline-item';
         
-        const achievementsList = exp.achievements.map(achievement => 
+        const achievements = Array.isArray(exp.achievements) ? exp.achievements : [];
+        const achievementsList = achievements.map(achievement => 
             `<li>${achievement}</li>`
         ).join('');
         
@@ -1279,7 +1283,7 @@ function updateExperienceSection(experience) {
 
 function updateProjectsSection(projects) {
     const projectsGrid = document.querySelector('.projects-grid');
-    if (!projectsGrid || !projects.length) return;
+    if (!projectsGrid || !Array.isArray(projects) || projects.length === 0) return;
     
     projectsGrid.innerHTML = '';
     
@@ -1287,7 +1291,8 @@ function updateProjectsSection(projects) {
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
         
-        const techTags = project.technologies.map(tech => 
+        const techList = Array.isArray(project.technologies) ? project.technologies : [];
+        const techTags = techList.map(tech => 
             `<span class="tech-tag">${tech}</span>`
         ).join('');
         
@@ -1326,26 +1331,36 @@ function updateAboutSection(data) {
     // Update expertise areas with skills from resume data
     const expertiseGrid = document.querySelector('.expertise-grid');
     if (expertiseGrid && data.skills) {
+        const dbList = Array.isArray(data.skills.databases) ? data.skills.databases : [];
+        const cloudList = Array.isArray(data.skills.cloud) ? data.skills.cloud : [];
+        const specialtiesList = Array.isArray(data.skills.specialties) ? data.skills.specialties : [];
+        const aiList = Array.isArray(data.skills.ai_genai) ? data.skills.ai_genai : [];
+        const securityList = Array.isArray(data.skills.security) ? data.skills.security : [];
         expertiseGrid.innerHTML = `
             <div class="expertise-item">
                 <i class="fas fa-database"></i>
                 <h5>Oracle Database Administration</h5>
-                <p>Expert in ${data.skills.databases.join(', ')}</p>
+                <p>Expert in ${dbList.join(', ')}</p>
             </div>
             <div class="expertise-item">
                 <i class="fas fa-cloud"></i>
                 <h5>Multi-Cloud Architecture</h5>
-                <p>Specialized in ${data.skills.cloud.join(', ')}</p>
+                <p>Specialized in ${cloudList.join(', ')}</p>
+            </div>
+            <div class="expertise-item">
+                <i class="fas fa-brain"></i>
+                <h5>AI & GenAI</h5>
+                <p>Building with ${aiList.join(', ')}</p>
             </div>
             <div class="expertise-item">
                 <i class="fas fa-shield-alt"></i>
                 <h5>Security & Compliance</h5>
-                <p>Security Program Manager with expertise in risk compliance and security teams</p>
+                <p>${securityList.join(', ')}</p>
             </div>
             <div class="expertise-item">
                 <i class="fas fa-tachometer-alt"></i>
                 <h5>Performance & Migration</h5>
-                <p>${data.skills.specialties.join(', ')}</p>
+                <p>${specialtiesList.join(', ')}</p>
             </div>
         `;
     }
@@ -1354,22 +1369,26 @@ function updateAboutSection(data) {
 function updateStats(stats) {
     const statsGrid = document.querySelector('.stats-grid');
     if (!statsGrid || !stats) return;
+    const safeExperience = typeof stats.experience === 'string' ? stats.experience.replace(' Years', '+') : '';
+    const safeMigrations = typeof stats.migrations === 'string' ? stats.migrations.replace(' Customer Migrations', '+') : '';
+    const safeCustomers = typeof stats.customers === 'string' ? stats.customers.replace(' Customers Supported', '+') : '';
+    const safeUptime = typeof stats.uptime === 'string' ? stats.uptime.replace(' Uptime Achieved', '') : '';
     
     statsGrid.innerHTML = `
         <div class="stat-item">
-            <span class="stat-number">${stats.experience.replace(' Years', '+')}</span>
+            <span class="stat-number">${safeExperience}</span>
             <span class="stat-label">Years Experience</span>
         </div>
         <div class="stat-item">
-            <span class="stat-number">${stats.migrations.replace(' Customer Migrations', '+')}</span>
+            <span class="stat-number">${safeMigrations}</span>
             <span class="stat-label">Customer Migrations</span>
         </div>
         <div class="stat-item">
-            <span class="stat-number">${stats.customers.replace(' Customers Supported', '+')}</span>
+            <span class="stat-number">${safeCustomers}</span>
             <span class="stat-label">Customers Supported</span>
         </div>
         <div class="stat-item">
-            <span class="stat-number">${stats.uptime.replace(' Uptime Achieved', '')}</span>
+            <span class="stat-number">${safeUptime}</span>
             <span class="stat-label">Uptime Achieved</span>
         </div>
     `;

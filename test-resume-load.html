@@ -67,7 +67,7 @@
                         <ul>
                             <li><strong>Name:</strong> ${resumeData.personalInfo.name}</li>
                             <li><strong>Title:</strong> ${resumeData.personalInfo.title}</li>
-                            <li><strong>Email:</strong> ${resumeData.personalInfo.email.join(', ')}</li>
+                            <li><strong>Email:</strong> ${Array.isArray(resumeData.personalInfo.email) ? resumeData.personalInfo.email.join(', ') : (resumeData.personalInfo.email || '')}</li>
                             <li><strong>Phone:</strong> ${resumeData.personalInfo.phone}</li>
                             <li><strong>Experience Entries:</strong> ${resumeData.experience.length}</li>
                             <li><strong>Projects:</strong> ${resumeData.projects.length}</li>
