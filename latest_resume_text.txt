@@ -1,6 +1,6 @@
 		
 Surender	Gyanmote	 	
-Phone:	(510)	304-0672   ¨	Email:	sgyanmot@yahoo.com,	sgyanmot@gmail.com		
+Phone:	XXX-XXX-XXXX   ¨	Email:	sgyanmot@yahoo.com,	sgyanmot@gmail.com		
 LinkedIn:	https://www.linkedin.com/in/gyanmotesurender			
 		
 		
@@ -123,5 +123,5 @@ EDUCATION	AND	ACHIEVEMENTS
 ❖ OCI	-	Oracle	Cloud	Infrastructure	Architect	Professional	2019,	2020,	2021and	2024.	
 ❖ Oracle	Cloud	Infrastructure	2024	AI	Foundations	Associate	(1Z0-1122-24)	
 ➢ AWS	CertiZied	Solutions	Architect	–	Associate		
-➢ Microsoft	Azure	Fundamentals	-	AZ-900	
+➢ Microsoft	Azure	Fundamentals	-	AZ-900
 

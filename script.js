@@ -341,15 +341,75 @@ document.addEventListener('DOMContentLoaded', function() {
         document.removeEventListener('click', initSounds);
     }, { once: true });
 
-    // Add sound toggle button to the page
-    function createSoundToggle() {
-        const soundToggle = document.createElement('button');
-        soundToggle.innerHTML = '🔊';
-        soundToggle.className = 'sound-toggle';
-        soundToggle.title = 'Toggle Sound Effects';
-        soundToggle.style.cssText = `
+    // Create sound toggle button
+    (function() {
+        if (typeof window.createSoundToggle === 'function') {
+            window.createSoundToggle();
+            return;
+        }
+        const soundBtn = document.createElement('button');
+        soundBtn.className = 'sound-toggle';
+        soundBtn.style.cssText = `
             position: fixed;
-            bottom: 20px;
+            top: 80px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #333;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        `;
+        const positionSoundToggle = () => {
+            const w = window.innerWidth;
+            let top = 80;
+            if (w <= 480) top = 60;
+            else if (w <= 768) top = 70;
+            soundBtn.style.top = `${top}px`;
+            soundBtn.style.left = `20px`;
+        };
+        positionSoundToggle();
+        window.addEventListener('resize', positionSoundToggle);
+        const updateIcon = () => {
+            soundBtn.innerHTML = soundSystem.isEnabled ? '🔊' : '🔇';
+            soundBtn.title = soundSystem.isEnabled ? 'Mute Sound Effects' : 'Unmute Sound Effects';
+        };
+        updateIcon();
+        soundBtn.addEventListener('click', () => {
+            const enabled = soundSystem.toggle();
+            updateIcon();
+            showNotification(enabled ? 'Sound effects enabled' : 'Sound effects muted', enabled ? 'success' : 'info');
+        });
+        soundBtn.addEventListener('mouseenter', () => {
+            soundBtn.style.transform = 'scale(1.1)';
+            soundBtn.style.background = 'rgba(255, 255, 255, 1)';
+        });
+        soundBtn.addEventListener('mouseleave', () => {
+            soundBtn.style.transform = 'scale(1)';
+            soundBtn.style.background = 'rgba(255, 255, 255, 0.9)';
+        });
+        document.body.appendChild(soundBtn);
+        window.toggleSound = () => {
+            const enabled = soundSystem.toggle();
+            updateIcon();
+            return enabled;
+        };
+    })();
+    // Create resume data reload button
+    createReloadButton();
+    // Create theme toggle button
+    function createThemeToggle() {
+        const themeToggle = document.createElement('button');
+        themeToggle.innerHTML = '🌙';
+        themeToggle.className = 'theme-toggle';
+        themeToggle.title = 'Toggle Daylight/Night Mode';
+        themeToggle.style.cssText = `
+            position: fixed;
+            top: 20px;
             left: 20px;
             z-index: 1000;
             background: rgba(255, 255, 255, 0.9);
@@ -365,32 +425,38 @@ document.addEventListener('DOMContentLoaded', function() {
             -webkit-tap-highlight-color: transparent;
         `;
 
-        soundToggle.addEventListener('click', () => {
-            const isEnabled = soundSystem.toggle();
-            soundToggle.innerHTML = isEnabled ? '🔊' : '🔇';
-            soundToggle.title = isEnabled ? 'Disable Sound Effects' : 'Enable Sound Effects';
-            
-            // Play a test sound when enabling
-            if (isEnabled) {
-                soundSystem.play('success');
-            }
+        const applyThemeFromStorage = () => {
+            const saved = localStorage.getItem('theme');
+            const isDark = saved === 'dark';
+            document.body.classList.toggle('dark-mode', isDark);
+            themeToggle.innerHTML = isDark ? '☀️' : '🌙';
+            themeToggle.title = isDark ? 'Switch to Daylight Mode' : 'Switch to Night Mode';
+        };
+
+        applyThemeFromStorage();
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = !document.body.classList.contains('dark-mode');
+            document.body.classList.toggle('dark-mode', isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark ? '☀️' : '🌙';
+            themeToggle.title = isDark ? 'Switch to Daylight Mode' : 'Switch to Night Mode';
         });
 
-        soundToggle.addEventListener('mouseenter', () => {
-            soundToggle.style.transform = 'scale(1.1)';
-            soundToggle.style.background = 'rgba(255, 255, 255, 1)';
+        themeToggle.addEventListener('mouseenter', () => {
+            themeToggle.style.transform = 'scale(1.1)';
+            themeToggle.style.background = 'rgba(255, 255, 255, 1)';
         });
 
-        soundToggle.addEventListener('mouseleave', () => {
-            soundToggle.style.transform = 'scale(1)';
-            soundToggle.style.background = 'rgba(255, 255, 255, 0.9)';
+        themeToggle.addEventListener('mouseleave', () => {
+            themeToggle.style.transform = 'scale(1)';
+            themeToggle.style.background = 'rgba(255, 255, 255, 0.9)';
         });
 
-        document.body.appendChild(soundToggle);
+        document.body.appendChild(themeToggle);
     }
 
-    // Create sound toggle button
-    createSoundToggle();
+    createThemeToggle();
 });
 
 // Initialize all interactive desk elements
@@ -1001,7 +1067,7 @@ function showNotification(message, type = 'info') {
 // Resume Data Loading and Synchronization
 async function loadResumeData() {
     try {
-        const response = await fetch('./resume-data.json');
+        const response = await fetch(`./resume-data.json?ts=${Date.now()}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -1013,6 +1079,120 @@ async function loadResumeData() {
         console.error('❌ Error loading resume data:', error);
         showNotification('Failed to load latest resume data. Using cached content.', 'error');
     }
+}
+
+// Duplicate content update helpers removed
+
+// Add a top-right reload button to re-fetch resume-data.json on demand
+function createReloadButton() {
+    const reloadBtn = document.createElement('button');
+    reloadBtn.innerHTML = '🔄';
+    reloadBtn.className = 'reload-toggle';
+    reloadBtn.title = 'Reload Resume Data';
+    reloadBtn.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid #333;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    `;
+
+    reloadBtn.addEventListener('click', async () => {
+        try {
+            reloadBtn.disabled = true;
+            reloadBtn.style.opacity = '0.7';
+            showNotification('Reloading resume data...', 'info');
+            await loadResumeData();
+        } finally {
+            reloadBtn.disabled = false;
+            reloadBtn.style.opacity = '1';
+        }
+    });
+
+    reloadBtn.addEventListener('mouseenter', () => {
+        reloadBtn.style.transform = 'scale(1.1)';
+        reloadBtn.style.background = 'rgba(255, 255, 255, 1)';
+    });
+
+    reloadBtn.addEventListener('mouseleave', () => {
+        reloadBtn.style.transform = 'scale(1)';
+        reloadBtn.style.background = 'rgba(255, 255, 255, 0.9)';
+    });
+
+    document.body.appendChild(reloadBtn);
+
+    // Expose manual reload to window for debugging
+    window.reloadResume = () => loadResumeData();
+}
+
+// Add a top-right sound toggle button to enable/disable sound effects
+function createSoundToggle() {
+    const soundBtn = document.createElement('button');
+    soundBtn.className = 'sound-toggle';
+    soundBtn.style.cssText = `
+        position: fixed;
+        top: 80px;
+        left: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid #333;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    `;
+    const positionSoundToggle = () => {
+        const w = window.innerWidth;
+        let top = 80;
+        if (w <= 480) top = 60;
+        else if (w <= 768) top = 70;
+        soundBtn.style.top = `${top}px`;
+        soundBtn.style.left = `20px`;
+    };
+    positionSoundToggle();
+    window.addEventListener('resize', positionSoundToggle);
+    const updateIcon = () => {
+        soundBtn.innerHTML = soundSystem.isEnabled ? '🔊' : '🔇';
+        soundBtn.title = soundSystem.isEnabled ? 'Mute Sound Effects' : 'Unmute Sound Effects';
+    };
+
+    updateIcon();
+
+    soundBtn.addEventListener('click', () => {
+        const enabled = soundSystem.toggle();
+        updateIcon();
+        showNotification(enabled ? 'Sound effects enabled' : 'Sound effects muted', enabled ? 'success' : 'info');
+    });
+
+    soundBtn.addEventListener('mouseenter', () => {
+        soundBtn.style.transform = 'scale(1.1)';
+        soundBtn.style.background = 'rgba(255, 255, 255, 1)';
+    });
+
+    soundBtn.addEventListener('mouseleave', () => {
+        soundBtn.style.transform = 'scale(1)';
+        soundBtn.style.background = 'rgba(255, 255, 255, 0.9)';
+    });
+
+    document.body.appendChild(soundBtn);
+
+    // Expose manual toggle to window for debugging
+    window.toggleSound = () => {
+        const enabled = soundSystem.toggle();
+        updateIcon();
+        return enabled;
+    };
 }
 
 function updateWebsiteContent(data) {
